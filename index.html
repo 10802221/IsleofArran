@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>GIS and the Web</title>
+		<title>Isle of Arran</title>
 
  		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
 		<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
@@ -37,10 +37,10 @@
 			const mapCentre = L.latLng(55.573605, -5.240179);
 
 			// set the map to use the above coordinates, and to zoom level 16
-			map.setView(mapCentre, 16);
+			map.setView(mapCentre, 5);
 
 			// this is a variable that holds a reference the tiles that will be used for the basemap
-			const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'});
+			const tiles = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png'', {attribution: ''Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'});
 
 			//add the tiles to the map
 			tiles.addTo(map);
