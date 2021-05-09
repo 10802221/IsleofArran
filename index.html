@@ -34,7 +34,7 @@
 			const map = L.map('map');
 
 			// this is a variable that holds the coordinates of the map centre
-			const mapCentre = L.latLng(53.466502, -2.235387);
+			const mapCentre = L.latLng(55.573605, -5.240179);
 
 			// set the map to use the above coordinates, and to zoom level 16
 			map.setView(mapCentre, 16);
@@ -44,6 +44,18 @@
 
 			//add the tiles to the map
 			tiles.addTo(map);
+			
+			// create a marker at your chosen coordinates
+			const marker = L.marker(mapCentre);
+	
+			// add the marker to the map
+			marker.addTo(map);
+	
+			// add a popup to the marker and store it in a popup
+			const popup = marker.bindPopup("<p class='popuptext'><b>Hello world!</b><br>This is Arran!</p>");
+	
+			// open the popup
+			popup.openPopup();
 		</script>
 	</body>
 </html>
