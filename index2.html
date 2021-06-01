@@ -57,6 +57,15 @@
 			// open the popup
 			popup.openPopup();
 			
+			map.locate({setView: true, maxZoom: 16});
+			function onLocationFound(e) {
+			var radius = e.accuracy;
+
+			var loc = L.marker(e.latlng).addTo(map)
+			}
+
+			
+			map.on('locationfound', onLocationFound);
 			
 		</script>
 	</body>
