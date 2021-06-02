@@ -6,6 +6,7 @@
 
  		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
 		<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+		<script src='https://unpkg.com/@turf/turf@6.3.0/turf.min.js'></script>
 
 		<style>
       
@@ -45,18 +46,61 @@
 			//add the tiles to the map
 			tiles.addTo(map);
 			
-			// create a marker at your chosen coordinates
-			const marker = L.marker(mapCentre);
-	
-			// add the marker to the map
-			marker.addTo(map);
-	
-			// add a popup to the marker and store it in a popup
-			const popup = marker.bindPopup("<p class='popuptext'><b>Hello world!</b><br>This is Arran!</p>");
-	
-			// open the popup
-			popup.openPopup();
 			
+			//Test geofence for Huttons unconformity 
+			var point = turf.point([-5.289176, 55.715494]); 					// Create a turf point 
+			var buffered = turf.buffer(point, 1, {units: 'miles'}); 		// create 0.3 mile buffer around point 
+			var buffered2 = turf.buffer(point, 2, {units: 'miles'}); 
+			L.geoJSON(buffered).addTo(map); 										// Polygon = buffer 
+			L.geoJSON(buffered2).addTo(map);									// Add buffer to map as Leaflet geojson
+			L.geoJSON(point).addTo(map); 
+			
+			
+			
+			//Test geofence for Corrie Sandstone
+			var point = turf.point([-5.138701,55.640370]); 					// Create a turf point 
+			var buffered = turf.buffer(point, 1, {units: 'miles'}); 		// create 0.3 mile buffer around point 
+			var buffered2 = turf.buffer(point, 2, {units: 'miles'}); 
+			L.geoJSON(buffered).addTo(map); 										// Polygon = buffer 
+			L.geoJSON(buffered2).addTo(map);									// Add buffer to map as Leaflet geojson
+			L.geoJSON(point).addTo(map); 
+			
+			//Goatfell 
+			var point = turf.point([-5.192576, 55.623599]); 					// Create a turf point 
+			var buffered = turf.buffer(point, 1, {units: 'miles'}); 		// create 0.3 mile buffer around point 
+			var buffered2 = turf.buffer(point, 2, {units: 'miles'}); 
+			L.geoJSON(buffered).addTo(map); 										// Polygon = buffer 
+			L.geoJSON(buffered2).addTo(map);									// Add buffer to map as Leaflet geojson
+			L.geoJSON(point).addTo(map);
+			
+			
+			//Kildonan dykes 
+			var point = turf.point([-5.110211, 55.442576]); 					// Create a turf point 
+			var buffered = turf.buffer(point, 1, {units: 'miles'}); 		// create 0.3 mile buffer around point 
+			var buffered2 = turf.buffer(point, 2, {units: 'miles'}); 
+			L.geoJSON(buffered).addTo(map); 										// Polygon = buffer 
+			L.geoJSON(buffered2).addTo(map);									// Add buffer to map as Leaflet geojson
+			L.geoJSON(point).addTo(map);
+			
+			
+			
+			//Drumadoon Sill 
+			var point = turf.point([ -5.355160,55.506934]); 					// Create a turf point 
+			var buffered = turf.buffer(point, 1, {units: 'miles'}); 		// create 0.3 mile buffer around point 
+			var buffered2 = turf.buffer(point, 2, {units: 'miles'}); 
+			L.geoJSON(buffered).addTo(map); 										// Polygon = buffer 
+			L.geoJSON(buffered2).addTo(map);									// Add buffer to map as Leaflet geojson
+			L.geoJSON(point).addTo(map);
+			
+
+			
+			// Glen Rosa
+			var point = turf.point([-5.187110, 55.599607]); 					// Create a turf point 
+			var buffered = turf.buffer(point, 1, {units: 'miles'}); 		// create 0.3 mile buffer around point 
+			var buffered2 = turf.buffer(point, 2, {units: 'miles'}); 
+			L.geoJSON(buffered).addTo(map); 										// Polygon = buffer 
+			L.geoJSON(buffered2).addTo(map);									// Add buffer to map as Leaflet geojson
+			L.geoJSON(point).addTo(map);
 			
 		</script>
 	</body>
