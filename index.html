@@ -2,9 +2,9 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Isle of Arran</title>
+		<title>Geolocation test</title>     <!-- Title of webpage -->           
 
- 		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
+ 		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"/>
 		<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
 		<script src='https://unpkg.com/@turf/turf@6.3.0/turf.min.js'></script>
 
@@ -26,7 +26,8 @@
 		</style>
 	</head>
 	<body>
-	<!-- A division to hold the map -->
+
+    <!-- A division to hold the map -->
 		<div id='map'></div>
 
 		<script>
@@ -35,75 +36,50 @@
 			const map = L.map('map');
 
 			// this is a variable that holds the coordinates of the map centre
-			const mapCentre = L.latLng(55.573605, -5.240179);
+			const mapCentre = L.latLng(53.807409, -1.838380);
 
 			// set the map to use the above coordinates, and to zoom level 16
-			map.setView(mapCentre, 10);
+			map.setView(mapCentre, 16);
 
 			// this is a variable that holds a reference the tiles that will be used for the basemap
-			const tiles = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'});
+			const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'});
 
 			//add the tiles to the map
 			tiles.addTo(map);
 			
+		    map.locate({setView: true, maxZoom: 16});			//Add geolocation 
 			
-			//Test geofence for Huttons unconformity 
-			var point = turf.point([-5.289176, 55.715494]); 					// Create a turf point 
-			var buffered = turf.buffer(point, 300, {units: 'meters'}); 		// Based on geofence research 
-			var buffered2 = turf.buffer(point, 1, {units: 'miles'}); 
-			L.geoJSON(buffered).addTo(map); 										// Polygon = buffer 
-			L.geoJSON(buffered2).addTo(map);									// Add buffer to map as Leaflet geojson
-			var markerhu = L.geoJSON(point).addTo(map); 
-			markerhu.bindPopup("Hutton's unconformity").openPopup(); 
-			
-			
-			//Test geofence for Corrie Sandstone
-			var point = turf.point([-5.138701,55.640370]); 					// Create a turf point 
-			var buffered = turf.buffer(point, 500, {units: 'meters'}); 		// Based on geofence research 
-			var buffered2 = turf.buffer(point, 1, {units: 'miles'}); 
-			L.geoJSON(buffered).addTo(map); 										// Polygon = buffer 
-			L.geoJSON(buffered2).addTo(map);									// Add buffer to map as Leaflet geojson
-			var markercs = L.geoJSON(point).addTo(map); 
-			markercs.bindPopup("Corrie Sandstone").openPopup(); 
-			
-			//Goatfell 
-			var point = turf.point([-5.192576, 55.623599]); 					// Create a turf point 
-			var buffered = turf.buffer(point, 700, {units: 'meters'}); 		// Not sure about this one ???? 
-			var buffered2 = turf.buffer(point, 1, {units: 'miles'}); 
-			L.geoJSON(buffered).addTo(map); 										// Polygon = buffer 
-			L.geoJSON(buffered2).addTo(map);									// Add buffer to map as Leaflet geojson
-			var markerg = L.geoJSON(point).addTo(map);
-			markerg.bindPopup("Goatfell").openPopup();
-			
-			//Kildonan dykes 
-			var point = turf.point([-5.110211, 55.442576]); 					// Create a turf point 
-			var buffered = turf.buffer(point, 300, {units: 'meters'}); 		// Based on geofence research 
-			var buffered2 = turf.buffer(point, 1, {units: 'miles'}); 
-			L.geoJSON(buffered).addTo(map); 										// Polygon = buffer 
-			L.geoJSON(buffered2).addTo(map);									// Add buffer to map as Leaflet geojson
-			var markerkd = L.geoJSON(point).addTo(map);
-			markerkd.bindPopup("Kildonan Dykes").openPopup();
-			
-			
-			//Drumadoon Sill 
-			var point = turf.point([ -5.355160,55.506934]); 					// Create a turf point 
-			var buffered = turf.buffer(point, 500, {units: 'meters'}); 		// Based on geofence research 
-			var buffered2 = turf.buffer(point, 1, {units: 'miles'}); 
-			L.geoJSON(buffered).addTo(map); 										// Polygon = buffer 
-			L.geoJSON(buffered2).addTo(map);									// Add buffer to map as Leaflet geojson
-			var markerds = L.geoJSON(point).addTo(map);
-			markerds.bindPopup("Drumadoon Sill").openPopup();
+			function onLocationFound(e) {                 // Create function for geolocation
+				var radius = e.accuracy;
+				var loc = L.marker(e.latlng).addTo(map);							//Add geolocation to map as a marker 
+				let geopoint = turf.point([e.latlng.lng, e.latlng.lat]);		//Create turf point at geolocation
+				
+				
+				var point_one = turf.point([-1.831891,53.805537]); 			     // Create a turf point at shop (centre of the buffer, on arran this will be geosite)
+				var buffered = turf.buffer(point_one, 0.1, {units: 'miles'}); 		// create 0.3 mile buffer around point (buffer size varies) 
+				var marker_one = L.geoJSON(point_one).addTo(map);				     // Add points to map 
+				L.geoJSON(buffered).addTo(map);										// Add geofence to map 
+				let poly_one = buffered;                                               // set buffer as polygon 
 
+				var point_two = turf.point([-1.833600,53.813349]);					 // Create turf point at park 
+				var buffered_two = turf.buffer(point_two, 0.1, {units: 'miles'}); 
+				var marker_two = L.geoJSON(point_two).addTo(map);
+				L.geoJSON(buffered_two).addTo(map); 
+				let poly_two = buffered; 
+
+				const bufferList = [poly_one];      // Store poly(buffers) in an array 
+				for ( i = 0; i < bufferList.length; i++) {
+					if (turf.booleanWithin(geopoint, bufferList[i])) {						// if current location is within geofence
+					marker_one.bindPopup("You are here at marker one!").openPopup();		// add a popup to the marker created on line 54 
+				} else { 
+					loc.bindPopup("oh dear are you lost?").openPopup(); 						// otherwise add message not in geofence 
+				}
+				}
+			};
 			
-			// Glen Rosa
-			var point = turf.point([-5.187110, 55.599607]); 					// Create a turf point 
-			var buffered = turf.buffer(point, 500, {units: 'meters'}); 		// This one overlaps with Goatfell 
-			var buffered2 = turf.buffer(point, 1, {units: 'miles'}); 
-			L.geoJSON(buffered).addTo(map); 										// Polygon = buffer 
-			L.geoJSON(buffered2).addTo(map);									// Add buffer to map as Leaflet geojson
-			var markergr = L.geoJSON(point).addTo(map);
-			markergr.bindPopup("Glen Rosa").openPopup(); 
 			
+			map.on('locationfound', onLocationFound);
+		
 		</script>
 	</body>
 </html>
