@@ -3,33 +3,39 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Geolocation test</title>     <!-- Title of webpage -->           
-
- 		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"/>
+	
+ 		
+		
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"/>
 		<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
 		<script src='https://unpkg.com/@turf/turf@6.3.0/turf.min.js'></script>
-
+		
 		<style>
-      
+	  
       /* set the web page to full size */
 			html, body {
 				padding: 0;
-				margin: 0;
+				margin: 5;
 				width: 100%;
 				height: 100%;
 			}
 
       /* set the map to full page */
 			#map {
-				width: 100%;
-				height: 100%;
+				width: 80%;
+				height: 80%;
 			}
 		</style>
+	
 	</head>
 	<body>
 
     <!-- A division to hold the map -->
+		
+		<h2>My First Attempt at a location based game</h2>
 		<div id='map'></div>
-
+		
+		
 		<script>
 
 			// this is a variable that holds the map
@@ -42,44 +48,67 @@
 			map.setView(mapCentre, 16);
 
 			// this is a variable that holds a reference the tiles that will be used for the basemap
-			const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'});
+			const tiles = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'});
 
 			//add the tiles to the map
 			tiles.addTo(map);
 			
-		    map.locate({setView: true, maxZoom: 16});			//Add geolocation 
+		    map.locate({setView: true, maxZoom: 18});			//Add geolocation 
 			
+			const rewards = 0; 
+			
+			///////FUNCTION FOR GEOLOCATION//////////
 			function onLocationFound(e) {                 // Create function for geolocation
 				var radius = e.accuracy;
-				var loc = L.marker(e.latlng).addTo(map);							//Add geolocation to map as a marker 
+				var loc = L.marker(e.latlng).addTo(map);					//Add geolocation to map as a marker  
 				let geopoint = turf.point([e.latlng.lng, e.latlng.lat]);		//Create turf point at geolocation
 				
-				
-				var point_one = turf.point([-1.831891,53.805537]); 			     // Create a turf point at shop (centre of the buffer, on arran this will be geosite)
-				var buffered = turf.buffer(point_one, 0.1, {units: 'miles'}); 		// create 0.3 mile buffer around point (buffer size varies) 
-				var marker_one = L.geoJSON(point_one).addTo(map);				     // Add points to map 
-				L.geoJSON(buffered).addTo(map);										// Add geofence to map 
-				let poly_one = buffered;                                               // set buffer as polygon 
-
-				var point_two = turf.point([-1.833600,53.813349]);					 // Create turf point at park 
+				///CREATE FIRST POINT/////////////								
+				var point_one = turf.point([-1.832071,53.805628]);					 // Create second turf point 
+				var buffered_one = turf.buffer(point_one, 0.1, {units: 'miles'}); 
+				var marker_one = L.geoJSON(point_one).addTo(map);
+				L.geoJSON(buffered_one).addTo(map); 
+				let inner_geofence1 = buffered_one; 
+				 
+				/////CREATE SECOND POINT/////////
+				var point_two = turf.point([-1.833600,53.813349]);					 // Create second turf point 
 				var buffered_two = turf.buffer(point_two, 0.1, {units: 'miles'}); 
 				var marker_two = L.geoJSON(point_two).addTo(map);
 				L.geoJSON(buffered_two).addTo(map); 
-				let poly_two = buffered; 
-
-				const bufferList = [poly_one];      // Store poly(buffers) in an array 
+				let inner_geofence2 = buffered_two; 
+				
+				//////CREATE THIRD MARKER////////
+				var point_three  = turf.point([ -1.848351, 53.816278]); 
+				var buffered_three = turf.buffer(point_three, 0.1, {units:'miles'}); 
+				var marker_three = L.geoJSON(point_three).addTo(map); 
+				L.geoJSON(buffered_three).addTo(map); 
+				let inner_geofence3 = buffered_three; 
+				
+				
+				///CREATE FORTH MARKER////////
+				var point_four  = turf.point([ -1.855304, 53.806041]); 
+				var buffered_four = turf.buffer(point_four, 0.1, {units:'miles'}); 
+				var marker_four = L.geoJSON(point_four).addTo(map); 
+				L.geoJSON(buffered_four).addTo(map); 
+				let inner_geofence4 = buffered_four;
+			
+				////USE FOR LOOP TO CHECK IF CURRENT LOCATION IS WITHIN GEOFENCE (NEED TO DO THIS FOR BOTH GEOFENCES) 
+				const bufferList = [inner_geofence1,inner_geofence2, inner_geofence3, inner_geofence4];      // Store poly(buffers) in an array 
 				for ( i = 0; i < bufferList.length; i++) {
 					if (turf.booleanWithin(geopoint, bufferList[i])) {						// if current location is within geofence
-					marker_one.bindPopup("You are here at marker one!").openPopup();		// add a popup to the marker created on line 54 
+					loc.bindPopup("<b>Well done you found the point</b><br> In the future information will be displayed here.").openPopup();		// add a popup to the marker created on line 54 
+					var rewards = 0;  
+					rewards += 1; 
+					window.alert(rewards);
 				} else { 
 					loc.bindPopup("oh dear are you lost?").openPopup(); 						// otherwise add message not in geofence 
 				}
 				}
 			};
 			
-			
 			map.on('locationfound', onLocationFound);
-		
+			
+			
 		</script>
 	</body>
 </html>
