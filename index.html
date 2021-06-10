@@ -16,15 +16,15 @@
       /* set the web page to full size */
 			html, body {
 				padding: 0;
-				margin: 1;
+				margin: 0;
 				width: 100%;
 				height: 100%;
 			}
 
       /* set the map to full page */
 			#map {
-				width: 90%;
-				height: 90%;
+				width: 100%;
+				height: 100%;
 			}
 		</style>
 	
@@ -33,13 +33,22 @@
 
     <!-- A division to hold the map -->
 		
-		<h2>A location based game</h2>
-		<div id='map'></div>
+		<h2 style= 'font-size: 30px'>A location based game</h2>                               
+		<p style='font-size:20px'>Your current score is:</p>
+		<p style='font-size:20px'id="score"></p>			<!--Score-->
+		<div id='map'></div>        <!--Map-->
+	
 		
 		<script>
 		
-			alert("welcome to the Isle of Arran! \n In order to continue please enable location ");
-
+			//alert("welcome to the Isle of Arran! \n In order to continue please enable location ");     //Alert shown when webpage is opened 
+			var myStyle = {                       // Style for geofences 
+				"color": "FF0000",
+				"weight": 5,
+				"opacity": 0.35
+			};
+			
+			
 			// this is a variable that holds the map
 			const map = L.map('map');
 
@@ -62,49 +71,95 @@
 			function onLocationFound(e) {                 // Create function for geolocation
 				var radius = e.accuracy;
 				var loc = L.marker(e.latlng).addTo(map);					//Add geolocation to map as a marker  
+				
 				let geopoint = turf.point([e.latlng.lng, e.latlng.lat]);		//Create turf point at geolocation
 				
 				///CREATE FIRST POINT/////////////								
-				var point_one = turf.point([-1.832071,53.805628]);					 // Create second turf point 
-				var buffered_one = turf.buffer(point_one, 0.1, {units: 'miles'}); 
-				var marker_one = L.geoJSON(point_one).addTo(map);
-				L.geoJSON(buffered_one).addTo(map); 
-				let inner_geofence1 = buffered_one; 
+				var point_one = turf.point([-1.832071,53.805628]);					 // Turf point 
+				var buffered_one = turf.buffer(point_one, 0.1, {units: 'miles'}); 	// Add inner buffer 
+				var buffered_one = turf.buffer(point_one, 0.1, {units: 'miles'}); 	// Add inner buffer 
+				var buffered_one_outer = turf.buffer(point_one, 0.2, {units: 'miles'}); // Add outer buffer 
+				var marker_one = L.geoJSON(point_one).addTo(map);						// Add point to map as buffer 
+				L.geoJSON(buffered_one).addTo(map); 									// Add inner buffer to map 
+				L.geoJSON(buffered_one_outer, {style: myStyle}).addTo(map); 			// Add outer buffer with style 
+				let inner_geofence1 = buffered_one; 									// Assign inner buffer to variable 
+				let outer_geofence1 = buffered_one_outer; 								// Assign outer buffer to variable
 				 
 				/////CREATE SECOND POINT/////////
-				var point_two = turf.point([-1.833600,53.813349]);					 // Create second turf point 
-				var buffered_two = turf.buffer(point_two, 0.1, {units: 'miles'}); 
-				var marker_two = L.geoJSON(point_two).addTo(map);
-				L.geoJSON(buffered_two).addTo(map); 
-				let inner_geofence2 = buffered_two; 
+				var point_two = turf.point([-1.833600,53.813349]);					 // Turf point 
+				var buffered_two = turf.buffer(point_two, 0.1, {units: 'miles'}); 	// Add inner buffer
+				var buffered_two_outer = turf.buffer(point_two, 0.2, {units: 'miles'}); // Add outer buffer 
+				var marker_two = L.geoJSON(point_two).addTo(map);						// Add point to map as marker
+				L.geoJSON(buffered_two).addTo(map); 									// Add inner buffer to map 
+				L.geoJSON(buffered_two_outer, {style: myStyle}).addTo(map); 			// Add outer buffer to map with style 
+				let inner_geofence2 = buffered_two; 									// Assign inner buffer to variable 
+				let outer_geofence2 = buffered_two_outer; 								// Assign outer buffer to variable =
 				
 				//////CREATE THIRD POINT////////
-				var point_three  = turf.point([ -1.848351, 53.816278]); 
-				var buffered_three = turf.buffer(point_three, 0.1, {units:'miles'}); 
-				var marker_three = L.geoJSON(point_three).addTo(map); 
-				L.geoJSON(buffered_three).addTo(map); 
-				let inner_geofence3 = buffered_three; 
-				
+				var point_three  = turf.point([ -1.848351, 53.816278]); // Turf point 
+				var buffered_three = turf.buffer(point_three, 0.1, {units:'miles'}); // Add inner buffer 
+				var buffered_three_outer = turf.buffer(point_three, 0.2, {units: 'miles' }); // Add outer buffer
+				var marker_three = L.geoJSON(point_three).addTo(map); 						// Add point to map as marker
+				L.geoJSON(buffered_three).addTo(map); 										// Add inner buffer to map 
+				L.geoJSON(buffered_three_outer, {style: myStyle}).addTo(map); 				// Add outer buffer to map using style
+				let inner_geofence3 = buffered_three; 										// Assign inner buffer to variable 
+				let outer_geofence3 = buffered_three_outer; 								// Assign outer buffer to variable 
 				
 				///CREATE FORTH POINT////////
-				var point_four  = turf.point([ -1.855304, 53.806041]); 
-				var buffered_four = turf.buffer(point_four, 0.9, {units:'miles'}); 
-				var marker_four = L.geoJSON(point_four).addTo(map); 
-				L.geoJSON(buffered_four).addTo(map); 
-				let inner_geofence4 = buffered_four;
-			
-				////USE FOR LOOP TO CHECK IF CURRENT LOCATION IS WITHIN GEOFENCE (NEED TO DO THIS FOR BOTH GEOFENCES) 
-				const bufferList = [inner_geofence1,inner_geofence2, inner_geofence3, inner_geofence4];      // Store poly(buffers) in an array 
-				for ( i = 0; i < bufferList.length; i++) {
-					if (turf.booleanWithin(geopoint, bufferList[i])) {						// if current location is within geofence
-					loc.bindPopup("<b>Well done you found the point</b><br> In the future information will be displayed here.").openPopup();		// add a popup to the marker created on line 54 
-					var rewards = 0;   //Attempt at a scoring system
-					rewards += 1; 
-					console.log(rewards); 
-				} else { 
-					loc.bindPopup("oh dear are you lost?").openPopup(); 						// otherwise add message not in geofence 
+				var point_four  = turf.point([ -1.855304, 53.806041]);               // Turf point
+				var buffered_four = turf.buffer(point_four, 0.1, {units:'miles'});   // Add inner buffer 
+				var buffered_four_outer = turf.buffer(point_four, 0.2,{units: 'miles'});    // Add outer buffer
+				var marker_four = L.geoJSON(point_four).addTo(map); 						// Add point to map as marker 
+				L.geoJSON(buffered_four).addTo(map); 										// Add inner buffer to map 
+				L.geoJSON(buffered_four_outer, {style: myStyle}).addTo(map); 				// Add outer buffer to map using style defined above 
+				let inner_geofence4 = buffered_four;										// Assign inner buffer to variable 
+				let outer_geofence4 = buffered_four_outer;									// Assign outer buffer to variable 
+				
+				///////CREATE FIFTH POINT////////
+				var point_five  = turf.point([-1.831529,53.818457]);               // Turf point
+			    var buffered_five = turf.buffer(point_five, 0.1, {units:'miles'});   // Add inner buffer 
+				var buffered_five_outer = turf.buffer(point_five, 0.2,{units: 'miles'});    // Add outer buffer
+				var marker_five = L.geoJSON(point_five).addTo(map); 						// Add point to map as marker 
+				L.geoJSON(buffered_five).addTo(map); 										// Add inner buffer to map 
+				L.geoJSON(buffered_five_outer, {style: myStyle}).addTo(map); 				// Add outer buffer to map using style defined above 
+				let inner_geofence5 = buffered_five;										// Assign inner buffer to variable 
+				let outer_geofence5 = buffered_five_outer;									// Assign outer buffer to variable 
+				
+				
+				////CREATE SIXTH POINT///////
+				var point_six  = turf.point([-1.826278, 53.810118]);               // Turf point
+			    var buffered_six = turf.buffer(point_six, 0.1, {units:'miles'});   // Add inner buffer 
+				var buffered_six_outer = turf.buffer(point_six, 0.2,{units: 'miles'});    // Add outer buffer
+				var marker_six = L.geoJSON(point_six).addTo(map); 						// Add point to map as marker 
+				L.geoJSON(buffered_six).addTo(map); 										// Add inner buffer to map 
+				L.geoJSON(buffered_six_outer, {style: myStyle}).addTo(map); 				// Add outer buffer to map using style defined above 
+				let inner_geofence6 = buffered_six;										// Assign inner buffer to variable 
+				let outer_geofence6 = buffered_six_outer;									// Assign outer buffer to variable 
+				
+				///USE FOR LOOP TO CHECK IF CURRENT LOCATION IS WITHIN OUTER GEOFENCE (AND THEREFORE PROVIDE A COMPASS/DIRECTIONS TO SITE) 
+				const outerbufferList = [outer_geofence5,outer_geofence4, outer_geofence3 ,outer_geofence2, outer_geofence1, outer_geofence6]; //Only works 4321 not 1234
+				for (let i = 0; i < outerbufferList.length; i++) { 
+					if (turf.booleanWithin(geopoint, outerbufferList[i])) { 
+						loc.bindPopup("<b>Getting close! </b><br>Directions will appear here").openPopup(); 
+					} else { 
+						loc.bindPopup("Keep looking!").openPopup(); 
+					}
+				};
+				
+				////USE FOR LOOP TO CHECK IF CURRENT LOCATION IS WITHIN INNER GEOFENCE (AND THEREFORE PROVIDES INFORMATION ABOUT SITE)
+				const innerbufferList = [inner_geofence1,inner_geofence2, inner_geofence3, inner_geofence4, inner_geofence5, inner_geofence6];      // Store poly(buffers) in an array 
+				for ( let i = 0; i < innerbufferList.length; i++) {      // For each item in the array 
+					if (turf.booleanWithin(geopoint, innerbufferList[i])) {						// if current location is within geofence
+						loc.bindPopup("<b>Well done you found the point</b><br> In the future information will be displayed here.").openPopup();		// add a popup to the marker created on line 54 
+						var rewards = 0;   //Attempt at a scoring system
+						rewards += 1;      //Add point to rewards
+						document.getElementById("score").innerHTML = rewards; //Display rewards on interface 
+					} else { 
+					//	loc.bindPopup("where are you?").openPopup(); 						// otherwise add message of encouragement   
+					}
 				}
-				}
+				
+				
 			};
 			
 			map.on('locationfound', onLocationFound);
