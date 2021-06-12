@@ -88,8 +88,8 @@
 				
 				/////CREATE SECOND SITE/////////
 				var site_two = turf.point([-1.833600,53.813349]);					 // Turf point 
-				var buffered_two_inner = turf.buffer(site_two, 0.1, {units: 'miles'}); 	// Add inner buffer
-				var buffered_two_outer = turf.buffer(site_two, 0.1, {units: 'miles'}); // Add outer buffer 
+				var buffered_two_inner = turf.buffer(site_two, 0.2, {units: 'miles'}); 	// Add inner buffer
+				var buffered_two_outer = turf.buffer(site_two, 0.3, {units: 'miles'}); // Add outer buffer 
 				var marker_two = L.geoJSON(site_two).addTo(map);						// Add point to map as marker
 				L.geoJSON(buffered_two_inner).addTo(map); 									// Add inner buffer to map 
 				L.geoJSON(buffered_two_outer, {style: myStyle}).addTo(map); 			// Add outer buffer to map with style 
@@ -100,7 +100,7 @@
 				//////CREATE THIRD SITE////////
 				var site_three  = turf.point([ -1.848351, 53.816278]); // Turf point 
 				var buffered_three_inner = turf.buffer(site_three, 0.1, {units:'miles'}); // Add inner buffer 
-				var buffered_three_outer = turf.buffer(site_three, 0.1, {units: 'miles' }); // Add outer buffer
+				var buffered_three_outer = turf.buffer(site_three, 0.2, {units: 'miles' }); // Add outer buffer
 				var marker_three = L.geoJSON(site_three).addTo(map); 						// Add point to map as marker
 				L.geoJSON(buffered_three_inner).addTo(map); 										// Add inner buffer to map 
 				L.geoJSON(buffered_three_outer, {style: myStyle}).addTo(map); 				// Add outer buffer to map using style
@@ -111,7 +111,7 @@
 				///CREATE FORTH SITE////////
 				var site_four  = turf.point([ -1.855304, 53.806041]);               // Turf point
 				var buffered_four_inner = turf.buffer(site_four, 0.1, {units:'miles'});   // Add inner buffer 
-				var buffered_four_outer = turf.buffer(site_four, 0.1,{units: 'miles'});    // Add outer buffer
+				var buffered_four_outer = turf.buffer(site_four, 0.2,{units: 'miles'});    // Add outer buffer
 				var marker_four = L.geoJSON(site_four).addTo(map); 						// Add point to map as marker 
 				L.geoJSON(buffered_four_inner).addTo(map); 										// Add inner buffer to map 
 				L.geoJSON(buffered_four_outer, {style: myStyle}).addTo(map); 				// Add outer buffer to map using style defined above 
@@ -122,7 +122,7 @@
 				///////CREATE FIFTH SITE////////
 				var site_five  = turf.point([-1.831529,53.818457]);               // Turf point
 			    var buffered_five_inner = turf.buffer(site_five, 0.1, {units:'miles'});   // Add inner buffer 
-				var buffered_five_outer = turf.buffer(site_five, 0.1,{units: 'miles'});    // Add outer buffer
+				var buffered_five_outer = turf.buffer(site_five, 0.2,{units: 'miles'});    // Add outer buffer
 				var marker_five = L.geoJSON(site_five).addTo(map); 						// Add point to map as marker 
 				L.geoJSON(buffered_five_inner).addTo(map); 										// Add inner buffer to map 
 				L.geoJSON(buffered_five_outer, {style: myStyle}).addTo(map); 				// Add outer buffer to map using style defined above 
@@ -133,7 +133,7 @@
 				////CREATE SIXTH SITE///////
 				var site_six  = turf.point([-1.826278, 53.810118]);               // Turf point
 			    var buffered_six_inner = turf.buffer(site_six, 0.1, {units:'miles'});   // Add inner buffer 
-				var buffered_six_outer = turf.buffer(site_six, 0.9,{units: 'miles'});    // Add outer buffer
+				var buffered_six_outer = turf.buffer(site_six, 0.2,{units: 'miles'});    // Add outer buffer
 				var marker_six = L.geoJSON(site_six).addTo(map); 						// Add point to map as marker 
 				L.geoJSON(buffered_six_inner).addTo(map); 										// Add inner buffer to map 
 				L.geoJSON(buffered_six_outer, {style: myStyle}).addTo(map); 				// Add outer buffer to map using style defined above 
