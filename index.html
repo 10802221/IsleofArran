@@ -53,7 +53,7 @@
 			const map = L.map('map');
 
 			// this is a variable that holds the coordinates of the map centre
-			const mapCentre = L.latLng(53.807409, -1.838380);
+			const mapCentre = L.latLng(53.856619,-1.786854);
 
 			// set the map to use the above coordinates, and to zoom level 16
 			map.setView(mapCentre, 14);
@@ -75,9 +75,9 @@
 				
 				let geopoint = turf.point([e.latlng.lng, e.latlng.lat]);		//Create turf point at geolocation
 				
-				///CREATE FIRST SITE/////////////								
-				var site_one = turf.point([-1.832071,53.805628]);					 // Turf point 
-				let inner_geofence1 = turf.buffer(site_one, 0.1, {units: 'miles'}); 	// Add inner buffer 
+				//CREATE FIRST SITE//							
+				var site_one = turf.point([-1.784279,53.862010]);					 // Turf point 
+				let inner_geofence1 = turf.buffer(site_one, 0.05, {units: 'miles'}); 	// Add inner buffer 
 				let outer_geofence1 = turf.buffer(site_one, 0.1, {units: 'miles'}); // Add outer buffer 
 				var marker_one = L.geoJSON(site_one).bindPopup("site 1").addTo(map);  // Add point to map as buffer 
 				L.geoJSON(inner_geofence1).addTo(map); 									// Add inner buffer to map 
@@ -85,18 +85,18 @@
 				
 				 
 				
-				/////CREATE SECOND SITE/////////
-				var site_two = turf.point([-1.833600,53.813349]);					 // Turf point 
-				let inner_geofence2 = turf.buffer(site_two, 0.1, {units: 'miles'}); 	// Add inner buffer
+				//CREATE SECOND SITE///
+				var site_two = turf.point([-1.786854,53.856619]);					 // Turf point 
+				let inner_geofence2 = turf.buffer(site_two, 0.05, {units: 'miles'}); 	// Add inner buffer
 				let outer_geofence2 = turf.buffer(site_two, 0.1, {units: 'miles'}); // Add outer buffer 
 				var marker_two = L.geoJSON(site_two).bindPopup("site 2").addTo(map); // Add point to map as marker
 				L.geoJSON(inner_geofence2).addTo(map); 									// Add inner buffer to map 
 				L.geoJSON(outer_geofence2, {style: myStyle}).addTo(map); 			// Add outer buffer to map with style 
 				
 				
-				//////CREATE THIRD SITE////////
-				var site_three  = turf.point([ -1.848351, 53.816278]); // Turf point 
-				let inner_geofence3 = turf.buffer(site_three, 0.1, {units:'miles'}); // Add inner buffer 
+				//CREATE THIRD SITE//
+				var site_three  = turf.point([-1.803591, 53.848721]); // Turf point 
+				let inner_geofence3 = turf.buffer(site_three, 0.05, {units:'miles'}); // Add inner buffer 
 				let outer_geofence3 = turf.buffer(site_three, 0.1, {units: 'miles' }); // Add outer buffer
 				var marker_three = L.geoJSON(site_three).bindPopup("site 3").addTo(map); // Add point to map as marker
 				L.geoJSON(inner_geofence3).addTo(map); 										// Add inner buffer to map 
@@ -123,7 +123,7 @@
 				
 				////CREATE SIXTH SITE///////
 				var site_six  = turf.point([-1.826278, 53.810118]);               // Turf point
-			    let inner_geofence6 = turf.buffer(site_six, 0.9, {units:'miles'});   // Add inner buffer 
+			    let inner_geofence6 = turf.buffer(site_six, 0.1, {units:'miles'});   // Add inner buffer 
 				let outer_geofence6 = turf.buffer(site_six, 0.1,{units: 'miles'});    // Add outer buffer
 				var marker_six = L.geoJSON(site_six).bindPopup("site 6").addTo(map); 	// Add point to map as marker 
 				L.geoJSON(inner_geofence6).addTo(map); 										// Add inner buffer to map 
@@ -145,7 +145,7 @@
 				const innerbufferList = [inner_geofence1,inner_geofence2, inner_geofence3, inner_geofence4, inner_geofence5, inner_geofence6];      // Store poly(buffers) in an array
 				for ( let i = 0; i < innerbufferList.length; i++) {      // For each item in the array 
 					if (turf.booleanWithin(geopoint, innerbufferList[i])) {						// if current location is within geofence
-						loc.bindPopup("<b>Well done you found the point</b><br> In the future information will be displayed here.").openPopup();		// add a popup to the marker created on line 54 
+						loc.bindPopup("<b>Well done you found the site!</b><br> In the future information will be displayed here.").openPopup();		// add a popup to the marker created on line 54 
 						//var points = 0;   //Attempt at a scoring system
 						points += 1;      //Add point to rewards
 						document.getElementById("score").innerHTML = points; //Display rewards on interface 
