@@ -71,27 +71,28 @@
 			///////FUNCTION FOR GEOLOCATION//////////
 			function onLocationFound(e) {                 // Create function for geolocation
 				var radius = e.accuracy;
-				var redIcon = L.icon({
-					iconUrl: 'youarehere.png',  //https://www.flaticon.com/search?word=you%20are%20here
-					iconSize: [52,57], 
-					iconAnchor: [26, 57],
-			}); 
+				var redIcon = L.icon({    //create icon  
+					iconUrl: 'youarehere.png',  //https://www.flaticon.com/search?word=you%20are%20here  //icon URL 
+					iconSize: [52,57],    // Size of icon 
+					iconAnchor: [26, 57],  // icon (usually half and same)
+					popupAnchor: [0,-57],
+				});
 				
-				var loc = L.marker(e.latlng, {icon: redIcon}).addTo(map);					//Add geolocation to map as a marker 		
+				var loc = L.marker(e.latlng, {icon: redIcon}).addTo(map);	//Add geolocation to map as a marker using icon 		
 				
 				let geopoint = turf.point([e.latlng.lng, e.latlng.lat]);		//Create turf point at geolocation
 				
 				//CREATE FIRST SITE//							
-				var site_one = turf.point([-1.784279,53.862010]);					 // Turf point 
-				let inner_geofence1 = turf.buffer(site_one, 0.05, {units: 'miles'}); 	// Add inner buffer 
+				var site_one = turf.point([-1.833031,53.805585]);					 // Turf point 
+				let inner_geofence1 = turf.buffer(site_one, 0.1, {units: 'miles'}); 	// Add inner buffer 
 				let outer_geofence1 = turf.buffer(site_one, 0.1, {units: 'miles'}); // Add outer buffer 
 				var marker_one = L.geoJSON(site_one).bindPopup("site 1").addTo(map);  // Add point to map as buffer 
 				L.geoJSON(inner_geofence1).addTo(map); 									// Add inner buffer to map 
 				L.geoJSON(outer_geofence1, {style: myStyle}).addTo(map); 			// Add outer buffer with style 
 				
 				//CREATE SECOND SITE///
-				var site_two = turf.point([-1.786854,53.856619]);					 // Turf point 
-				let inner_geofence2 = turf.buffer(site_two, 0.05, {units: 'miles'}); 	// Add inner buffer
+				var site_two = turf.point([-1.833460,53.813846]);					 // Turf point 
+				let inner_geofence2 = turf.buffer(site_two, 0.1, {units: 'miles'}); 	// Add inner buffer
 				let outer_geofence2 = turf.buffer(site_two, 0.1, {units: 'miles'}); // Add outer buffer 
 				var marker_two = L.geoJSON(site_two).bindPopup("site 2").addTo(map); // Add point to map as marker
 				L.geoJSON(inner_geofence2).addTo(map); 									// Add inner buffer to map 
@@ -99,8 +100,8 @@
 				
 				
 				//CREATE THIRD SITE//
-				var site_three  = turf.point([-1.803591, 53.848721]); // Turf point 
-				let inner_geofence3 = turf.buffer(site_three, 0.05, {units:'miles'}); // Add inner buffer 
+				var site_three  = turf.point([-1.848824, 53.816050]); // Turf point 
+				let inner_geofence3 = turf.buffer(site_three, 0.1, {units:'miles'}); // Add inner buffer 
 				let outer_geofence3 = turf.buffer(site_three, 0.1, {units: 'miles' }); // Add outer buffer
 				var marker_three = L.geoJSON(site_three).bindPopup("site 3").addTo(map); // Add point to map as marker
 				L.geoJSON(inner_geofence3).addTo(map); 										// Add inner buffer to map 
