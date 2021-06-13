@@ -10,6 +10,7 @@
 		<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
 		<script src='https://unpkg.com/@turf/turf@6.3.0/turf.min.js'></script>
 		
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		
 		<style>
 	  
@@ -29,6 +30,9 @@
 		</style>
 	
 	</head>
+	
+	
+	
 	<body>
 
     <!-- A division to hold the map -->
@@ -85,7 +89,7 @@
 				//CREATE FIRST SITE//							
 				var site_one = turf.point([-1.833031,53.805585]);					 // Turf point 
 				let inner_geofence1 = turf.buffer(site_one, 0.1, {units: 'miles'}); 	// Add inner buffer 
-				let outer_geofence1 = turf.buffer(site_one, 0.9, {units: 'miles'}); // Add outer buffer 
+				let outer_geofence1 = turf.buffer(site_one, 0.1, {units: 'miles'}); // Add outer buffer 
 				var marker_one = L.geoJSON(site_one).bindPopup("site 1").addTo(map);  // Add point to map as buffer 
 				L.geoJSON(inner_geofence1).addTo(map); 									// Add inner buffer to map 
 				L.geoJSON(outer_geofence1, {style: myStyle}).addTo(map); 			// Add outer buffer with style 
