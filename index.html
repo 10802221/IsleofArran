@@ -71,7 +71,13 @@
 			///////FUNCTION FOR GEOLOCATION//////////
 			function onLocationFound(e) {                 // Create function for geolocation
 				var radius = e.accuracy;
-				var loc = L.marker(e.latlng).addTo(map);					//Add geolocation to map as a marker  
+				var redIcon = L.icon({
+					iconUrl: 'youarehere.png',  //https://www.flaticon.com/search?word=you%20are%20here
+					iconSize: [32,37], 
+					iconAnchor: [16, 37],
+			}); 
+				
+				var loc = L.marker(e.latlng, {icon: redIcon}).addTo(map);					//Add geolocation to map as a marker 		
 				
 				let geopoint = turf.point([e.latlng.lng, e.latlng.lat]);		//Create turf point at geolocation
 				
@@ -82,8 +88,6 @@
 				var marker_one = L.geoJSON(site_one).bindPopup("site 1").addTo(map);  // Add point to map as buffer 
 				L.geoJSON(inner_geofence1).addTo(map); 									// Add inner buffer to map 
 				L.geoJSON(outer_geofence1, {style: myStyle}).addTo(map); 			// Add outer buffer with style 
-				
-				 
 				
 				//CREATE SECOND SITE///
 				var site_two = turf.point([-1.786854,53.856619]);					 // Turf point 
