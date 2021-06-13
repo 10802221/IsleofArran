@@ -10,6 +10,7 @@
 		<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
 		<script src='https://unpkg.com/@turf/turf@6.3.0/turf.min.js'></script>
 		
+		
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />  <!-- Change size to fit mobile browser --> 
 		
 		<style>
@@ -31,14 +32,14 @@
 	
 	</head>
 	
-	
+	<body style="background-color: MidnightBlue;">
 	
 	<body>
 
     <!-- A division to hold the map -->
 		
-		<h2 style= 'font-size: 30px'>A location based game</h2>                               
-		<p style='font-size:20px'>Sites visited:</p>
+		<h2 style= 'font-size: 40px; font-family: Arial; color:white; text-align: center'>A location based game</h2>     <!--style changes the look of the text-->                          
+		<p style='font-size:20px; font-family: Arial; color:white'>Sites visited:</p>
 		<p style='font-size:20px'id="score"></p>			<!--Score-->
 		<div id='map'></div>        <!--Map-->
 	
@@ -71,6 +72,7 @@
 		    map.locate({setView: true, maxZoom: 14});			//Add geolocation 
 			
 			var points = 0;        // Scoring system defined outside function so it doesnt get overwritten 
+			
 			
 			///////FUNCTION FOR GEOLOCATION//////////
 			function onLocationFound(e) {                 // Create function for geolocation
