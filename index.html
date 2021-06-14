@@ -69,7 +69,7 @@
 			//add the tiles to the map
 			tiles.addTo(map);
 			
-		    map.locate({setView: true, maxZoom: 14});			//Add geolocation 
+		    map.locate({setView: true, maxZoom: 14, watch:true});			//Add geolocation 
 			
 			let points = 0;        // Scoring system defined outside function so it doesnt get overwritten 
 
@@ -86,8 +86,6 @@
 				var loc = L.marker(e.latlng, {icon: redIcon}).addTo(map);	//Add geolocation to map as a marker using icon 		
 				
 				let geopoint = turf.point([e.latlng.lng, e.latlng.lat]);		//Create turf point at geolocation
-				
-				setInterval(onLocationFound, 2000); 
 				
 				//CREATE FIRST SITE//							
 				var site_one = turf.point([-1.833031,53.805585]);					 // Turf point 
