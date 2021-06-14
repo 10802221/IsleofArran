@@ -38,9 +38,9 @@
 
     <!-- A division to hold the map -->
 		
-		<h2 style= 'font-size: 40px; font-family: Arial; color:white; text-align: center'>A location based game</h2>     <!--style changes the look of the text-->                          
+		<h2 style= 'font-size: 30px; font-family: Arial; color:white; text-align: center'>A location based game</h2>     <!--style changes the look of the text-->                          
 		<p style='font-size:20px; font-family: Arial; color:white'>Sites visited:</p>
-		<p style='font-size:20px'id="score"></p>			<!--Score-->
+		<p style='font-size:20px; color:white; font-family: Arial'id="score"></p>			<!--Score-->
 		<div id='map'></div>        <!--Map-->
 	
 		
@@ -71,9 +71,8 @@
 			
 		    map.locate({setView: true, maxZoom: 14});			//Add geolocation 
 			
-			var points = 0;        // Scoring system defined outside function so it doesnt get overwritten 
-			
-			
+			let points = 0;        // Scoring system defined outside function so it doesnt get overwritten 
+
 			///////FUNCTION FOR GEOLOCATION//////////
 			function onLocationFound(e) {                 // Create function for geolocation
 				var radius = e.accuracy;
@@ -87,6 +86,7 @@
 				var loc = L.marker(e.latlng, {icon: redIcon}).addTo(map);	//Add geolocation to map as a marker using icon 		
 				
 				let geopoint = turf.point([e.latlng.lng, e.latlng.lat]);		//Create turf point at geolocation
+				 
 				
 				//CREATE FIRST SITE//							
 				var site_one = turf.point([-1.833031,53.805585]);					 // Turf point 
@@ -151,14 +151,13 @@
 					}
 				}
 				
-				
+			
 				////USE FOR LOOP TO CHECK IF CURRENT LOCATION IS WITHIN INNER GEOFENCE (AND THEREFORE PROVIDES INFORMATION ABOUT SITE)
 				const innerbufferList = [inner_geofence1,inner_geofence2, inner_geofence3, inner_geofence4, inner_geofence5, inner_geofence6];      // Store poly(buffers) in an array
 				for ( let i = 0; i < innerbufferList.length; i++) {      // For each item in the array 
 					if (turf.booleanWithin(geopoint, innerbufferList[i])) {						// if current location is within geofence
 						loc.bindPopup("<b>Well done you found the site!</b><br> In the future information will be displayed here.").openPopup();		// add a popup to the marker created on line 54 
-						//var points = 0;   //Attempt at a scoring system
-						points += 1;      //Add point to rewards
+						points ++;      //Add point to rewards 
 						document.getElementById("score").innerHTML = points; //Display rewards on interface 
 					} else { 
 					//	loc.bindPopup("where are you?").openPopup(); 	// otherwise add message of encouragement   
@@ -167,10 +166,11 @@
 				
 				
 			};
+			var interval = window.setInterval(function(){
+				map.on('locationfound', onLocationFound),
+				console.log("I am a working interval")
+			}, 2000); 
 			
-			map.on('locationfound', onLocationFound);
-			
-			
-		</script>
+	</script>
 	</body>
 </html>
