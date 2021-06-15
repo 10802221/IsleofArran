@@ -74,7 +74,7 @@
 			
 			let points = 0;        // Scoring system defined outside function so it doesnt get overwritten 
 			
-			var gps = null; 
+			var loc = null; 
 			///////FUNCTION FOR GEOLOCATION//////////
 			function onLocationFound(e) {                 // Create function for geolocation
 				var radius = e.accuracy;
@@ -85,10 +85,10 @@
 					popupAnchor: [0,-57],
 				});
 				
-				if (gps == null) {
-					gps = L.marker(e.latlng, {icon:redIcon}).addTo(map);
+				if (loc == null) {
+					loc = L.marker(e.latlng, {icon:redIcon}).addTo(map);
 				} else { 
-					gps.setLatLng(e.latlng); 
+					loc.setLatLng(e.latlng); 
 				}
 
 				
