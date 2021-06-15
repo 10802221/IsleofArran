@@ -73,7 +73,8 @@
 	
 			
 			let points = 0;        // Scoring system defined outside function so it doesnt get overwritten 
-
+			
+			var gps = null; 
 			///////FUNCTION FOR GEOLOCATION//////////
 			function onLocationFound(e) {                 // Create function for geolocation
 				var radius = e.accuracy;
@@ -84,8 +85,14 @@
 					popupAnchor: [0,-57],
 				});
 				
-			var loc = L.marker(e.latlng, {icon: redIcon}).bindPopup("you are here").addTo(map);	//Add geolocation to map as a marker using icon 		
-			loc.setLatLng(e.latlng); 
+				if (gps == null) {
+					gps = L.marker(e.latlng, {icon:redIcon}).addTo(map);
+				} else { 
+					gps.setLatLng(e.latlng); 
+				}
+
+				
+			//var loc = L.marker(e.latlng, {icon: redIcon}).bindPopup("you are here").addTo(map);	//Add geolocation to map as a marker using icon 		
 			
 			let geopoint = turf.point([e.latlng.lng, e.latlng.lat]);		//Create turf point at geolocation
 				
@@ -164,11 +171,8 @@
 				//	loc.bindPopup("where are you?").openPopup(); 	// otherwise add message of encouragement   
 				}
 			}
-				
-				
-		};
-			
-		map.on('locationfound', onLocationFound); 
+			}	
+			map.on('locationfound', onLocationFound); 
 	
 	
 	</script>
