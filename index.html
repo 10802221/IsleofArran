@@ -86,7 +86,7 @@
 				});
 				
 				if (loc == null) {
-					loc = L.marker(e.latlng, {icon:redIcon}).addTo(map);
+					loc = L.marker(e.latlng, {icon:redIcon}).bindPopup("you are here").addTo(map);
 				} else { 
 					loc.setLatLng(e.latlng); 
 				}
