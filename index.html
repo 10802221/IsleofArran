@@ -25,8 +25,8 @@
 
       /* set the map to full page */
 			#map {
-				width: 100%;
-				height: 100%;
+				width: 50%;
+				height: 50%;
 			}
 		</style>
 	
@@ -38,9 +38,9 @@
 
     <!-- A division to hold the map -->
 		
-		<h2 style= 'font-size: 30px; font-family: Arial; color:white; text-align: center'>A location based game</h2>     <!--style changes the look of the text-->                          
-		<p style='font-size:20px; font-family: Arial; color:white'>Sites visited:</p>
-		<p style='font-size:20px; color:white; font-family: Arial'id="score"></p>			<!--Score-->
+		<h2 style= 'font-size: 10px; font-family: Arial; color:white; text-align: center'>A location based game</h2>     <!--style changes the look of the text-->                          
+		<p style='font-size:10px; font-family: Arial; color:white'>Sites visited:</p>
+		<p style='font-size:10px; color:white; font-family: Arial'id="score"></p>			<!--Score-->
 		<div id='map'></div>        <!--Map-->
 	
 		
@@ -69,12 +69,13 @@
 			//add the tiles to the map
 			tiles.addTo(map);
 			
-			map.locate({setView: true, maxZoom: 14, watch: true});			//Add geolocation  //ISSUE WITH THIS LINE PARTICULARLY WATCH BIT
+			map.locate({setView: true, maxZoom: 14, watch: true});			//Add geolocation watch = true means location is constantly watched rather than detected once  
 	
 			
 			let points = 0;        // Scoring system defined outside function so it doesnt get overwritten 
 			
-			var loc = null; 
+			var loc = null;   // Define location variable outside function 
+			
 			///////FUNCTION FOR GEOLOCATION//////////
 			function onLocationFound(e) {                 // Create function for geolocation
 				var radius = e.accuracy;
@@ -85,20 +86,19 @@
 					popupAnchor: [0,-57],
 				});
 				
-				if (loc == null) {
+				if (loc == null) {                        // Create a new marker
 					loc = L.marker(e.latlng, {icon:redIcon}).bindPopup("you are here").addTo(map);
 				} else { 
-					loc.setLatLng(e.latlng); 
+					loc.setLatLng(e.latlng); // update marker as position changes
 				}
 
+				geopoint = turf.point([e.latlng.lng, e.latlng.lat]);		//Create turf point at geolocation
 				
-			//var loc = L.marker(e.latlng, {icon: redIcon}).bindPopup("you are here").addTo(map);	//Add geolocation to map as a marker using icon 		
 			
-			let geopoint = turf.point([e.latlng.lng, e.latlng.lat]);		//Create turf point at geolocation
-				
+			
 			//CREATE FIRST SITE//							
 			var site_one = turf.point([-1.833031,53.805585]);					 // Turf point 
-			let inner_geofence1 = turf.buffer(site_one, 0.1, {units: 'miles'}); 	// Add inner buffer 
+			let inner_geofence1 = turf.buffer(site_one, 0.9, {units: 'miles'}); 	// Add inner buffer 
 			let outer_geofence1 = turf.buffer(site_one, 0.1, {units: 'miles'}); // Add outer buffer 
 			var marker_one = L.geoJSON(site_one).bindPopup("site 1").addTo(map);  // Add point to map as buffer 
 			L.geoJSON(inner_geofence1).addTo(map); 									// Add inner buffer to map 
@@ -171,9 +171,13 @@
 				//	loc.bindPopup("where are you?").openPopup(); 	// otherwise add message of encouragement   
 				}
 			}
-			}	
+			}
 			map.on('locationfound', onLocationFound); 
-	
+			
+			function onLocationError(e) {     // Add function in the event of failed geolocation 
+				alert(e.message); 
+			} 
+			map.on('locationerror', onLocationError); 
 	
 	</script>
 	</body>
