@@ -84,7 +84,7 @@
 					popupAnchor: [0,-57],
 				});
 				
-			var loc = L.marker(e.latlng, {icon: redIcon}).addTo(map);	//Add geolocation to map as a marker using icon 		
+			var loc = L.marker(e.latlng, {icon: redIcon}).bindPopup("you are here").addTo(map);	//Add geolocation to map as a marker using icon 		
 			loc.setLatLng(e.latlng); 
 			
 			let geopoint = turf.point([e.latlng.lng, e.latlng.lat]);		//Create turf point at geolocation
