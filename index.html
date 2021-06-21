@@ -46,9 +46,9 @@
 		
 		<script>
 			
-			let points = 0;        // Scoring system defined outside function so it doesnt get overwritten 
+			let points = 0;        // Scoring system defined outside function so it doesnt get overwritten  
 			var loc = null;  
-			
+			 
 			
 			//alert("welcome to the Isle of Arran! \n In order to continue please enable location ");     //Alert shown when webpage is opened 
 			var myStyle = {                       // Style for geofences 
@@ -90,7 +90,7 @@
 				})
 				
 				if (loc == null) {                        // Create a new marker
-					loc = L.marker(e.latlng, {icon:redIcon}).bindPopup("you are here").addTo(map);
+					loc = L.marker(e.latlng, {icon:redIcon}).addTo(map);
 				} else { 
 					loc.setLatLng(e.latlng); // update marker as position changes
 				}
@@ -107,19 +107,18 @@
 				////USE FOR LOOP TO CHECK IF CURRENT LOCATION IS WITHIN INNER GEOFENCE (AND THEREFORE PROVIDES INFORMATION ABOUT SITE)
 				const innerbufferList = [inner_geofence1,inner_geofence2, inner_geofence3, inner_geofence4, inner_geofence5, inner_geofence6];      // Store poly(buffers) in an array
 				for ( let i = 0; i < innerbufferList.length; i++) {      // For each item in the array 
-					if (turf.booleanWithin(geopoint, innerbufferList[i])) {						// if current location is within geofence
-						loc.bindPopup("<b>Well done you found the site!</b><br> In the future information will be displayed here.").openPopup();		// add a popup to the marker created on line 54 
+					if (turf.booleanWithin(geopoint, innerbufferList[i])) {					// if current location is within geofence
+						loc.bindPopup("<b>Well done you found the site!</b><br> In the future information will be displayed here.").openPopup();		// add a popup to the marker created on line 54  
+						points ++;      //Add point to rewards  
 						document.getElementById("score").innerHTML = points; //Display rewards on interface 
-					} 
-				}	
-			
+					} else {
+					}
+				}
 			}
 			
-			points ++;      //Add point to rewards 
-
 				//CREATE FIRST SITE//							
 				var site_one = turf.point([-1.833031,53.805585]);					 // Turf point 
-				let inner_geofence1 = turf.buffer(site_one, 0.1, {units: 'miles'}); 	// Add inner buffer 
+				let inner_geofence1 = turf.buffer(site_one, 0.9, {units: 'miles'}); 	// Add inner buffer 
 				let outer_geofence1 = turf.buffer(site_one, 0.1, {units: 'miles'}); // Add outer buffer 
 				var marker_one = L.geoJSON(site_one).bindPopup("site 1").addTo(map);  // Add point to map as buffer 
 				L.geoJSON(inner_geofence1).addTo(map); 									// Add inner buffer to map 
