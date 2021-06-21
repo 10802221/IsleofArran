@@ -46,6 +46,9 @@
 		
 		<script>
 			
+			let points = 0;        // Scoring system defined outside function so it doesnt get overwritten 
+			var loc = null;  
+			
 			
 			//alert("welcome to the Isle of Arran! \n In order to continue please enable location ");     //Alert shown when webpage is opened 
 			var myStyle = {                       // Style for geofences 
@@ -65,23 +68,20 @@
 			map.setView(mapCentre, 14);
 
 			// this is a variable that holds a reference the tiles that will be used for the basemap
-			const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+			const tiles = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'});
 
-			//add the tiles to the maps
+			//add the tiles to the map
 			tiles.addTo(map);
 			
 			map.locate({setView: false, maxZoom: 14, watch: true});			//Add geolocation watch = true means location is constantly watched rather than detected once  
 	
 			
-			let points = 0;        // Scoring system defined outside function so it doesnt get overwritten 
-			
-			var loc = null;  
-			var geopoint;    
-			
 			///////FUNCTION FOR GEOLOCATION//////////
 			function onLocationFound(e) {                 // Create function for geolocation
 				var radius = e.accuracy;
+				
 				geopoint = turf.point([e.latlng.lng, e.latlng.lat]);		//Create turf point at geolocation 	 
+				
 				var redIcon = L.icon({    //create icon  
 					iconUrl: 'youarehere.png',  //https://www.flaticon.com/search?word=you%20are%20here  //icon URL 
 					iconSize: [52,57],    // Size of icon 
@@ -95,6 +95,28 @@
 					loc.setLatLng(e.latlng); // update marker as position changes
 				}
 				
+				////USE FOR LOOP TO CHECK IF CURRENT LOCATION IS WITHIN OUTER GEOFENCE (AND THEREFORE PROVIDES DIRECTIONS)
+				const outerbufferList = [outer_geofence6, outer_geofence5, outer_geofence4, outer_geofence3, outer_geofence2, outer_geofence1];      // Store poly(buffers) in an array 
+				for ( let i = 0; i < outerbufferList.length; i++) {      // For each item in the array 
+					if (turf.booleanWithin(geopoint, outerbufferList[i])) {						// if current location is within geofence
+						loc.bindPopup("<b>Getting close!</b><br> In the future directions will appear here").openPopup();		// add a popup to the marker created on line 54  
+					}	  
+				}
+				
+			
+				////USE FOR LOOP TO CHECK IF CURRENT LOCATION IS WITHIN INNER GEOFENCE (AND THEREFORE PROVIDES INFORMATION ABOUT SITE)
+				const innerbufferList = [inner_geofence1,inner_geofence2, inner_geofence3, inner_geofence4, inner_geofence5, inner_geofence6];      // Store poly(buffers) in an array
+				for ( let i = 0; i < innerbufferList.length; i++) {      // For each item in the array 
+					if (turf.booleanWithin(geopoint, innerbufferList[i])) {						// if current location is within geofence
+						loc.bindPopup("<b>Well done you found the site!</b><br> In the future information will be displayed here.").openPopup();		// add a popup to the marker created on line 54 
+						document.getElementById("score").innerHTML = points; //Display rewards on interface 
+					} 
+				}	
+			
+			}
+			
+			points ++;      //Add point to rewards 
+
 				//CREATE FIRST SITE//							
 				var site_one = turf.point([-1.833031,53.805585]);					 // Turf point 
 				let inner_geofence1 = turf.buffer(site_one, 0.1, {units: 'miles'}); 	// Add inner buffer 
@@ -147,34 +169,10 @@
 				L.geoJSON(inner_geofence6).addTo(map); 										// Add inner buffer to map 
 				L.geoJSON(outer_geofence6, {style: myStyle}).addTo(map); 				// Add outer buffer to map using style defined above 
 							
-				
-				////USE FOR LOOP TO CHECK IF CURRENT LOCATION IS WITHIN OUTER GEOFENCE (AND THEREFORE PROVIDES DIRECTIONS)
-				const outerbufferList = [outer_geofence6, outer_geofence5, outer_geofence4, outer_geofence3, outer_geofence2, outer_geofence1];      // Store poly(buffers) in an array 
-				for ( let i = 0; i < outerbufferList.length; i++) {      // For each item in the array 
-					if (turf.booleanWithin(geopoint, outerbufferList[i])) {						// if current location is within geofence
-						loc.bindPopup("<b>Getting close!</b><br> In the future directions will appear here").openPopup();		// add a popup to the marker created on line 54  
-					} else {
-					//loc.bindPopup("Keep looking!").openPopup(); 						// otherwise add message of encouragement   
-					}
-				}
-				
-			
-				////USE FOR LOOP TO CHECK IF CURRENT LOCATION IS WITHIN INNER GEOFENCE (AND THEREFORE PROVIDES INFORMATION ABOUT SITE)
-				const innerbufferList = [inner_geofence1,inner_geofence2, inner_geofence3, inner_geofence4, inner_geofence5, inner_geofence6];      // Store poly(buffers) in an array
-				for ( let i = 0; i < innerbufferList.length; i++) {      // For each item in the array 
-					if (turf.booleanWithin(geopoint, innerbufferList[i])) {						// if current location is within geofence
-						loc.bindPopup("<b>Well done you found the site!</b><br> In the future information will be displayed here.").openPopup();		// add a popup to the marker created on line 54 
-						points ++;      //Add point to rewards 
-						document.getElementById("score").innerHTML = points; //Display rewards on interface 
-					} else { 
-					//	loc.bindPopup("where are you?").openPopup(); 	// otherwise add message of encouragement   
-						}
-				}	
-			}
-			
+					
 			map.on('locationfound', onLocationFound); 
 			
-			function onLocationError(e) {     // Add function in the event of failed geolocation 
+			function onLocationError(e) {     // Add function in the event of failed geolocation //seems to work even if location is found ? 
 				alert(e.message); 
 			} 
 			map.on('locationerror', onLocationError); 
