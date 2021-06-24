@@ -96,7 +96,7 @@
 			
 			map.locate({setView: false, maxZoom: 14, watch: true});			//Add geolocation watch = true means location is constantly watched rather than detected once  
 	
-			map.addControl( new L.Control.Compass() );   // Add compass to map (using plugin)  
+			map.addControl( new L.Control.Compass({autoActive: true, showDigit:true}) );   // Add compass to map (using plugin)  
 
 			
 			///////FUNCTION FOR GEOLOCATION//////////
