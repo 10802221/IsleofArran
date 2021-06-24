@@ -9,7 +9,8 @@
 		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"/>
 		<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
 		<script src='https://unpkg.com/@turf/turf@6.3.0/turf.min.js'></script>
-		
+		<link rel="stylesheet" href="./leaflet-compass-master/dist/leaflet-compass.min.css" /> 
+		<script src='./leaflet-compass-master/dist/leaflet-compass.min.js'></script>
 		
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />  <!-- Change size to fit mobile browser --> 
 		
@@ -63,12 +64,13 @@
 			<i style="background:#3c80ba"></i> Geosites <br>                    <!--legend--> 
 		</div>
 		
+		
 		<script>
 			
 			let points = 0;        // Scoring system defined outside function so it doesnt get overwritten  
 			var loc = null;  
 			 
-			
+			let geofence_tracker = [0,0,0,0,0,0];  // Create array with each geofence set to zero 
 			//alert("welcome to the Isle of Arran! \n In order to continue please enable location ");     //Alert shown when webpage is opened 
 			var myStyle = {                       // Style for geofences 
 				"color": "FF0000",
@@ -94,6 +96,8 @@
 			
 			map.locate({setView: false, maxZoom: 14, watch: true});			//Add geolocation watch = true means location is constantly watched rather than detected once  
 	
+			map.addControl( new L.Control.Compass() );   // Add compass to map (using plugin)  
+
 			
 			///////FUNCTION FOR GEOLOCATION//////////
 			function onLocationFound(e) {                 // Create function for geolocation
@@ -127,8 +131,12 @@
 				for ( let i = 0; i < innerbufferList.length; i++) {      // For each item in the array 
 					if (turf.booleanWithin(geopoint, innerbufferList[i])) {					// if current location is within geofence
 						loc.bindPopup("<b>Well done you found the site!</b><br> In the future information will be displayed here.").openPopup();		// add a popup to the marker created on line 54  
-						points ++;      //Add point to rewards  
-						document.getElementById("score").innerHTML = points; //Display rewards on interface 
+						if ( geofence_tracker [i] == 0) {     // If current geofence tracker value is 0 
+							geofence_tracker[i] = 1; 		// Change tracker to 1 
+							points = 0;      //Add point to rewards  
+							for(let j in geofence_tracker) { points += geofence_tracker[j]; } // for each site in geofence  tracker, points = geofence tracker 
+							document.getElementById("score").innerHTML = points; //Display rewards on interface 
+							}
 					} else { 
 					}
 				}
@@ -152,7 +160,7 @@
 			
 			//CREATE FIRST SITE//							
 			var site_one = turf.point([-1.833031,53.805585]);					 // Turf point 
-			let inner_geofence1 = turf.buffer(site_one, 0.1, {units: 'miles'}); 	// Add inner buffer 
+			let inner_geofence1 = turf.buffer(site_one, 0.9, {units: 'miles', steps: 16}); 	// Add inner buffer 
 			let outer_geofence1 = turf.buffer(site_one, 0.1, {units: 'miles'}); // Add outer buffer 
 			L.marker([53.805585,-1.833031], {icon:goatfell}).bindPopup("Goatfell").addTo(map);     // Add custom icons as regular markers (didnt really need turf for this bit)
 			L.geoJSON(inner_geofence1).addTo(map); 									// Add inner buffer to map 
@@ -211,7 +219,7 @@
 			} 
 			map.on('locationerror', onLocationError); 
 			
-				
+			
 	</script>
 	</body>
 </html>
