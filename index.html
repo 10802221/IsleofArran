@@ -17,6 +17,9 @@
 		<link rel="stylesheet" href="./leaflet-sidebar-master/src/L.Control.Sidebar.css" /> <!-- Leaflet sidebar CSS -->
 		<script src='./leaflet-sidebar-master/src/L.Control.Sidebar.js'></script> <!-- Leaflet sidebar js -->
 		
+		<link rel="stylesheet" href="./Leaflet.Legend-master/src/leaflet.legend.css" /> <!-- Leaflet legend CSS -->
+		<script src='./Leaflet.Legend-master/src/leaflet.legend.js'></script> <!-- Leaflet legend js -->
+		
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />  <!-- Change size to fit mobile browser --> 
 		
 		<style>
@@ -39,11 +42,11 @@
 	
 	</head>
 	
-	<body style="background-color: MidnightBlue">
+	<body style="background-color: MidnightBlue"> <!-- background colour --> 
 	
 	<body>
 		
-		<div id="sidebar"> 
+		<div id="sidebar">                  <!-- Sidebar --> 
 			<h1> Goatfell </h1> 
 			<p> Goat Fell (marked as Goatfell by the Ordnance Survey; Scottish Gaelic: Gaoda Bheinn) is the highest point on the Isle of Arran. At 874 metres (2,867 ft), it is one of four Corbetts on the island. The mountain, along with nearby Brodick Castle, is now owned by the National Trust for Scotland.The name is believed to mean 'Goat Mountain' (from the Norse geita).  </p> 
 			<img src= "goatfell.jpg" alt = "Goatfell" width = "400" height = "345">
@@ -94,7 +97,6 @@
 				position: 'left'
 			}); 
 			map.addControl(sidebar); 
-			sidebar.toggle(); 
 			
 			///////FUNCTION FOR GEOLOCATION//////////
 			function onLocationFound(e) {                 // Create function for geolocation
@@ -133,6 +135,7 @@
 							points = 0;      //Add point to rewards  
 							for(let j in geofence_tracker) { points += geofence_tracker[j]; } // for each site in geofence  tracker, points = geofence tracker 
 							document.getElementById("score").innerHTML = points; //Display rewards on interface 
+							sidebar.show(); 
 							}
 					} else { 
 					}
@@ -216,7 +219,14 @@
 			} 
 			map.on('locationerror', onLocationError); 
 			
-			
+			L.control.Legend({
+				position: "bottomright", 
+				legends: [{ 
+					label : "Goatfell", 
+					type: "image", 
+					url: "mountain.png",  
+				}]
+			}).addTo(map); 
 	</script>
 	</body>
 </html>
