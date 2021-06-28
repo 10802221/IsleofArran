@@ -14,6 +14,8 @@
 		<link rel="stylesheet" href="./leaflet-compass-master/dist/leaflet-compass.min.css" /> <!-- Leaflet compass CSS -->
 		<script src='./leaflet-compass-master/dist/leaflet-compass.min.js'></script> <!-- Leaflet compass js -->
 		
+		<link rel="stylesheet" href="./leaflet-sidebar-master/src/L.Control.Sidebar.css" /> <!-- Leaflet sidebar CSS -->
+		<script src='./leaflet-sidebar-master/src/L.Control.Sidebar.js'></script> <!-- Leaflet sidebar js -->
 		
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />  <!-- Change size to fit mobile browser --> 
 		
@@ -55,8 +57,10 @@
 	<body style="background-color: MidnightBlue">
 	
 	<body>
-
-    <!-- A division to hold the map -->
+		
+		<div id="sidebar"> 
+			<h1> Leaflet sidebar </h1> 
+		</div> 
 		
 		<h1 style= 'font-size: 20px; font-family: Arial; color:white; text-align: center; margin-bottom: -10px'>A location based game</h1>     <!--style changes the look of the text-->                          
 		<p style='font-size:20px; font-family: Arial; color:white'>Sites visited:</p>
@@ -101,8 +105,11 @@
 	
 			map.addControl( new L.Control.Compass({ position: 'topleft', showDigit:true}) );   // Add compass to map (using plugin)  
 
-		
-			
+			var sidebar = L.control.sidebar ('sidebar', {
+				position: 'left'
+			}); 
+			map.addControl(sidebar); 
+			sidebar.show(); 
 			///////FUNCTION FOR GEOLOCATION//////////
 			function onLocationFound(e) {                 // Create function for geolocation
 				var radius = e.accuracy;
