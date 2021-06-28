@@ -4,7 +4,6 @@
 		<meta charset="UTF-8">
 		<title>Testing!</title>     <!-- Title of webpage -->           
 	
- 		
 		
 		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"/>   <!-- Leafet CSS --> 
 		<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>   <!--Leaflet js --> 
@@ -14,8 +13,8 @@
 		<link rel="stylesheet" href="./leaflet-compass-master/dist/leaflet-compass.min.css" /> <!-- Leaflet compass CSS -->
 		<script src='./leaflet-compass-master/dist/leaflet-compass.min.js'></script> <!-- Leaflet compass js -->
 		
-		<link rel="stylesheet" href="./leaflet-sidebar-master/src/L.Control.Sidebar.css" /> <!-- Leaflet sidebar CSS -->
-		<script src='./leaflet-sidebar-master/src/L.Control.Sidebar.js'></script> <!-- Leaflet sidebar js -->
+		<link rel="stylesheet" href="./leaflet-sidebar-master/src/L.Control.Sidebar.css" /> <!-- Leaflet sidebar  V1 CSS -->
+		<script src='./leaflet-sidebar-master/src/L.Control.Sidebar.js'></script> <!-- Leaflet sidebar V1 js -->
 		
 		<link rel="stylesheet" href="./Leaflet.Legend-master/src/leaflet.legend.css" /> <!-- Leaflet legend CSS -->
 		<script src='./Leaflet.Legend-master/src/leaflet.legend.js'></script> <!-- Leaflet legend js -->
@@ -46,10 +45,10 @@
 	
 	<body>
 		
-		<div id="sidebar">                  <!-- Sidebar --> 
-			<h1> Goatfell </h1> 
+		<div id="sidebar">                  <!-- Sidebar (currently has only Goatfell in it) --> 
+			<h1> Congratulations! You have reached Goatfell </h1>             <!-- Heading -->
 			<p> Goat Fell (marked as Goatfell by the Ordnance Survey; Scottish Gaelic: Gaoda Bheinn) is the highest point on the Isle of Arran. At 874 metres (2,867 ft), it is one of four Corbetts on the island. The mountain, along with nearby Brodick Castle, is now owned by the National Trust for Scotland.The name is believed to mean 'Goat Mountain' (from the Norse geita).  </p> 
-			<img src= "goatfell.jpg" alt = "Goatfell" width = "400" height = "345">
+			<img src= "goatfell.jpg" alt = "Goatfell" width = "400" height = "345"> <!-- Add images like this -->
 			<p> Due to the popularity of "Scotland in miniature" (Arran), Goat Fell is a very popular peak and there are many possible routes of ascent, some of which may be combined with visits to the summits of other nearby peaks. The most commonly used route, a constructed path of just over 3 miles (5 km) in length, starts from near Brodick Castle in Cladach. Initially the path leads up through the forested grounds of the castle, passing many rhododendron bushes. At just under 1,000 ft (300 m) above sea level the path leaves the forestry, and the route continues through bare moorland, reaching the summit by way of the east ridge of the mountain. There is a viewpoint table at the summit: on a clear day Northern Ireland may be seen.Goatfell summit on a clear day.An alternative shorter and steeper route comes up from the village of Corrie. This route joins the main path on the east ridge. Goat Fell may also be climbed from the north, where it is linked by a ridge to the subsidiary top of North Goatfell, a point from which three ridges radiate. In addition to the ridge leading south to the main summit, there is a ridge heading northeast, providing some very easy scrambling as it passes over Cìoch na h-Òighe (the Young Maiden's Breast). Finally, the western ridge drops down to a bealach known as The Saddle, before climbing again towards the summit of Cìr Mhòr. The right-of-way between Glen Rosa and Glen Sannox passes over The Saddle.The mountain was the scene of the death of English tourist Edwin Rose who was murdered by John Watson Laurie in 1889 on the mountain. Laurie was sentenced to death, later commuted to a life sentence and spent the rest of his life in prison.[1]
 		</div> 
 		
@@ -58,45 +57,55 @@
 		<p style='font-size:20 px; color:white; font-family: Arial'id="score"></p>			<!--Score-->
 		<div id='map'></div>        <!--Map-->
 		
-		
+		<div id="sidebar_two">                  <!-- Sidebar two --> 
+			<h1> Settings </h1> 
+			<p> How to play: </p> 
+			<hr> 
+			<p> Something else </p>
+		</div> 
 		
 		<script>
 			
-			let points = 0;        // Scoring system defined outside function so it doesnt get overwritten  
-			var loc = null;  
-			 
+			var loc = null;  // Location variable       
+			
+			//COUNTER FOR SCORING SYSTEM 					
 			let geofence_tracker = [0,0,0,0,0,0];  // Create array with each geofence set to zero 
+			
+			
 			//alert("welcome to the Isle of Arran! \n In order to continue please enable location ");     //Alert shown when webpage is opened 
-			var myStyle = {                       // Style for geofences 
+			
+			var myStyle = {     // Style for geofences 
 				"color": "FF0000",
 				"weight": 5,
 				"opacity": 0.35
 			};
 			
 			
-			// this is a variable that holds the map
+			//CREATE MAP 
 			const map = L.map('map');
-
-			// this is a variable that holds the coordinates of the map centre
 			const mapCentre = L.latLng(53.805136, -1.840275);
-
-			// set the map to use the above coordinates, and to zoom level 16
 			map.setView(mapCentre, 14);
-
-			// this is a variable that holds a reference the tiles that will be used for the basemap
 			const tiles = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'});
-
-			//add the tiles to the map
-			tiles.addTo(map);
+			tiles.addTo(map); // Add tiles to map 
 			
+			// ADD LOCATE 
 			map.locate({setView: false, maxZoom: 14, watch: true});			//Add geolocation watch = true means location is constantly watched rather than detected once  
 	
+			//ADD COMPASS 
 			map.addControl( new L.Control.Compass({ position: 'topleft', showDigit:true}) );   // Add compass to map (using plugin)  
 
+			// ADD SIDEBAR TO DISPLAY INFORMATION ABOUT SITES 
 			var sidebar = L.control.sidebar ('sidebar', {         // Add sidebar to map 
 				position: 'left'
 			}); 
 			map.addControl(sidebar); 
+			
+			// ADD SIDEBAR WITH ADDITIONAL INFORMATION 
+			var sidebar_two = L.control.sidebar('sidebar_two', {
+				position: 'right' 
+			}); 
+			map.addControl(sidebar_two); 
+			sidebar_two.show();
 			
 			///////FUNCTION FOR GEOLOCATION//////////
 			function onLocationFound(e) {                 // Create function for geolocation
@@ -117,7 +126,7 @@
 					loc.setLatLng(e.latlng); // update marker as position changes
 				}
 				
-				////USE FOR LOOP TO CHECK IF CURRENT LOCATION IS WITHIN OUTER GEOFENCE (AND THEREFORE PROVIDES DIRECTIONS)
+				//USE FOR LOOP TO CHECK IF CURRENT LOCATION IS WITHIN OUTER GEOFENCE (AND THEREFORE PROVIDES DIRECTIONS)
 				const outerbufferList = [outer_geofence6, outer_geofence5, outer_geofence4, outer_geofence3, outer_geofence2, outer_geofence1];      // Store poly(buffers) in an array 
 				for ( let i = 0; i < outerbufferList.length; i++) {      // For each item in the array 
 					if (turf.booleanWithin(geopoint, outerbufferList[i])) {						// if current location is within geofence
@@ -125,7 +134,7 @@
 					}  
 				}
 				
-				////USE FOR LOOP TO CHECK IF CURRENT LOCATION IS WITHIN INNER GEOFENCE (AND THEREFORE PROVIDES INFORMATION ABOUT SITE)
+				//USE FOR LOOP TO CHECK IF CURRENT LOCATION IS WITHIN INNER GEOFENCE (AND THEREFORE PROVIDES INFORMATION ABOUT SITE)
 				const innerbufferList = [inner_geofence1,inner_geofence2, inner_geofence3, inner_geofence4, inner_geofence5, inner_geofence6];      // Store poly(buffers) in an array
 				for ( let i = 0; i < innerbufferList.length; i++) {      // For each item in the array 
 					if (turf.booleanWithin(geopoint, innerbufferList[i])) {					// if current location is within geofence
@@ -135,7 +144,11 @@
 							points = 0;      //Add point to rewards  
 							for(let j in geofence_tracker) { points += geofence_tracker[j]; } // for each site in geofence  tracker, points = geofence tracker 
 							document.getElementById("score").innerHTML = points; //Display rewards on interface 
-							sidebar.show(); 
+							sidebar.show();                              // Show sidebar when in geofence 
+							goatfell_marker.on('click', function () {    // Click marker to show sidebar (FIX THIS) 
+								sidebar.show();  
+							}); 
+							
 							}
 					} else { 
 					}
@@ -160,9 +173,9 @@
 			
 			//CREATE FIRST SITE//							
 			var site_one = turf.point([-1.833031,53.805585]);					 // Turf point 
-			let inner_geofence1 = turf.buffer(site_one, 0.1, {units: 'miles', steps: 32}); 	// Add inner buffer //Change steps to make buffer rounder 
-			let outer_geofence1 = turf.buffer(site_one, 0.2, {units: 'miles', steps: 32}); // Add outer buffer 
-			L.marker([53.805585,-1.833031], {icon:goatfell}).bindPopup("Goatfell").addTo(map);     // Add custom icons as regular markers (didnt really need turf for this bit)
+			let inner_geofence1 = turf.buffer(site_one, 0.9, {units: 'miles', steps: 32}); 	// Add inner buffer //Change steps to make buffer rounder 
+			let outer_geofence1 = turf.buffer(site_one, 0.1, {units: 'miles', steps: 32}); // Add outer buffer 
+			var goatfell_marker = L.marker([53.805585,-1.833031], {icon:goatfell}).bindPopup("Goatfell").addTo(map);     // Add custom icons as regular markers (didnt really need turf for this bit)
 			L.geoJSON(inner_geofence1).addTo(map); 									// Add inner buffer to map 
 			L.geoJSON(outer_geofence1, {style: myStyle}).addTo(map); 			// Add outer buffer with style 
 				
@@ -211,15 +224,17 @@
 			L.geoJSON(inner_geofence6).addTo(map); 										// Add inner buffer to map 
 			L.geoJSON(outer_geofence6, {style: myStyle}).addTo(map); 				// Add outer buffer to map using style defined above 
 							
-					
+			// CALL LOCATION FUNCTION 		
 			map.on('locationfound', onLocationFound); 
 			
+			// ADD FAILED GEOLOCATION FUNCTION 
 			function onLocationError(e) {     // Add function in the event of failed geolocation //seems to work even if location is found ? 
 				alert(e.message); 
 			} 
 			map.on('locationerror', onLocationError); 
 			
-			L.control.Legend({
+			//ADD LEGEND 
+			L.control.Legend({           // Add legend to map 
 				position: "bottomright", 
 				legends: [{ 
 					label : "Goatfell", 
