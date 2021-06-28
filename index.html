@@ -34,21 +34,6 @@
 				width: 100%;
 				height: 85%;
 			}
-			
-		.legend {
-				font-size: 20px;
-				font-family: Arial; 
-				padding-top: 10px;
-				text-align: left;
-				line-height: 18px;
-				background-color: #ffffff; 
-			}
-			.legend i {
-				width: 18px;
-				height: 18px;
-				float: left;
-				margin-right: 8px;	
-			
 
 		</style>
 	
@@ -61,6 +46,7 @@
 		<div id="sidebar"> 
 			<h1> Goatfell </h1> 
 			<p> Goat Fell (marked as Goatfell by the Ordnance Survey; Scottish Gaelic: Gaoda Bheinn) is the highest point on the Isle of Arran. At 874 metres (2,867 ft), it is one of four Corbetts on the island. The mountain, along with nearby Brodick Castle, is now owned by the National Trust for Scotland.The name is believed to mean 'Goat Mountain' (from the Norse geita).  </p> 
+			<img src= "goatfell.jpg" alt = "Goatfell" width = "400" height = "345">
 			<p> Due to the popularity of "Scotland in miniature" (Arran), Goat Fell is a very popular peak and there are many possible routes of ascent, some of which may be combined with visits to the summits of other nearby peaks. The most commonly used route, a constructed path of just over 3 miles (5 km) in length, starts from near Brodick Castle in Cladach. Initially the path leads up through the forested grounds of the castle, passing many rhododendron bushes. At just under 1,000 ft (300 m) above sea level the path leaves the forestry, and the route continues through bare moorland, reaching the summit by way of the east ridge of the mountain. There is a viewpoint table at the summit: on a clear day Northern Ireland may be seen.Goatfell summit on a clear day.An alternative shorter and steeper route comes up from the village of Corrie. This route joins the main path on the east ridge. Goat Fell may also be climbed from the north, where it is linked by a ridge to the subsidiary top of North Goatfell, a point from which three ridges radiate. In addition to the ridge leading south to the main summit, there is a ridge heading northeast, providing some very easy scrambling as it passes over Cìoch na h-Òighe (the Young Maiden's Breast). Finally, the western ridge drops down to a bealach known as The Saddle, before climbing again towards the summit of Cìr Mhòr. The right-of-way between Glen Rosa and Glen Sannox passes over The Saddle.The mountain was the scene of the death of English tourist Edwin Rose who was murdered by John Watson Laurie in 1889 on the mountain. Laurie was sentenced to death, later commuted to a life sentence and spent the rest of his life in prison.[1]
 		</div> 
 		
@@ -68,6 +54,7 @@
 		<p style='font-size:20px; font-family: Arial; color:white'>Sites visited:</p>
 		<p style='font-size:20 px; color:white; font-family: Arial'id="score"></p>			<!--Score-->
 		<div id='map'></div>        <!--Map-->
+		
 		
 		
 		<script>
@@ -103,11 +90,12 @@
 	
 			map.addControl( new L.Control.Compass({ position: 'topleft', showDigit:true}) );   // Add compass to map (using plugin)  
 
-			var sidebar = L.control.sidebar ('sidebar', {
+			var sidebar = L.control.sidebar ('sidebar', {         // Add sidebar to map 
 				position: 'left'
 			}); 
 			map.addControl(sidebar); 
-			sidebar.show(); 
+			sidebar.toggle(); 
+			
 			///////FUNCTION FOR GEOLOCATION//////////
 			function onLocationFound(e) {                 // Create function for geolocation
 				var radius = e.accuracy;
