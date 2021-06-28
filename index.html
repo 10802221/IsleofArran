@@ -160,8 +160,8 @@
 			
 			//CREATE FIRST SITE//							
 			var site_one = turf.point([-1.833031,53.805585]);					 // Turf point 
-			let inner_geofence1 = turf.buffer(site_one, 0.9, {units: 'miles', steps: 32}); 	// Add inner buffer //Change steps to make buffer rounder 
-			let outer_geofence1 = turf.buffer(site_one, 0.1, {units: 'miles', steps: 32}); // Add outer buffer 
+			let inner_geofence1 = turf.buffer(site_one, 0.1, {units: 'miles', steps: 32}); 	// Add inner buffer //Change steps to make buffer rounder 
+			let outer_geofence1 = turf.buffer(site_one, 0.2, {units: 'miles', steps: 32}); // Add outer buffer 
 			L.marker([53.805585,-1.833031], {icon:goatfell}).bindPopup("Goatfell").addTo(map);     // Add custom icons as regular markers (didnt really need turf for this bit)
 			L.geoJSON(inner_geofence1).addTo(map); 									// Add inner buffer to map 
 			L.geoJSON(outer_geofence1, {style: myStyle}).addTo(map); 			// Add outer buffer with style 
