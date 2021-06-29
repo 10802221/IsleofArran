@@ -117,7 +117,7 @@
 			map.locate({setView: false, maxZoom: 14, watch: true});			//Add geolocation watch = true means location is constantly watched rather than detected once  
 	
 			//ADD COMPASS 
-			map.addControl( new L.Control.Compass({ position: 'topleft', autoActive: true}) );   // Add compass to map (using plugin)  
+			map.addControl( new L.Control.Compass({ position: 'topleft', autoActive: false}) );   // Add compass to map (using plugin)  
 
 			// ADD SIDEBAR TO DISPLAY INFORMATION ABOUT SITES 
 			var sidebar_goatfell = L.control.sidebar ('sidebar_goatfell', {         // Add sidebar to map 
