@@ -117,7 +117,7 @@
 			map.locate({setView: false, maxZoom: 14, watch: true});			//Add geolocation watch = true means location is constantly watched rather than detected once  
 	
 			//ADD COMPASS 
-			map.addControl( new L.Control.Compass({ position: 'topleft', showDigit:true}) );   // Add compass to map (using plugin)  
+			map.addControl( new L.Control.Compass({ position: 'topleft', autoActive: true}) );   // Add compass to map (using plugin)  
 
 			// ADD SIDEBAR TO DISPLAY INFORMATION ABOUT SITES 
 			var sidebar_goatfell = L.control.sidebar ('sidebar_goatfell', {         // Add sidebar to map 
@@ -170,7 +170,6 @@
 				
 				const marker = [g, ds, cs, gr, hc, kd];  // Array of geosite markers 
 				 
-				
 				for ( let i = 0; i < innerbufferList.length; i++) {      // For each item in the array 
 					if (turf.booleanWithin(geopoint, innerbufferList[i])) {					// if current location is within geofence
 						marker[i].bindPopup("Well done you found the site!").openPopup();     // Add a popup to the relevant marker 
@@ -276,10 +275,6 @@
 					label : "Goatfell", 
 					type: "image", 
 					url: "mountain.png",  
-				}, {
-					label: "Drumadoon Sill", 
-					type: "image", 
-					url: "landslide.png",
 				}]
 			}).addTo(map); 
 	</script>
