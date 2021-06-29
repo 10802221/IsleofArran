@@ -67,6 +67,10 @@
 			<p> Something else </p>
 		</div> 
 		
+	
+		<button id="toggle">Toggle Sidebar</button>
+		<p id="demo"></p> 
+		
 		<script>
 			
 			var loc = null;  // Location variable       
@@ -108,7 +112,13 @@
 				position: 'right' 
 			}); 
 			map.addControl(sidebar_two); 
-			//sidebar_two.show();
+			
+			document.getElementById("toggle").onclick = Toggle; 
+			
+			function Toggle () { 
+				document.getElementById("demo").innerHTML = sidebar_two.toggle(); 
+			}
+			
 			
 			///////FUNCTION FOR GEOLOCATION//////////
 			function onLocationFound(e) {                 // Create function for geolocation
