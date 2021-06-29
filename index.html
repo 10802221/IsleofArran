@@ -38,18 +38,15 @@
 			}
 			
 			#toggle {
-				line-height: 20px;
-				width: 65px;
-				font-size: 10pt;
-				font-family: Arial;
+				line-height: 32px;
+				width: 37px; 
 				margin-top: 50px;
 				margin-right: 60px;
 				position: absolute;
 				top: 0;
 				right: 0;
-				color: black;
-				background-color: #FFFF00; 
-				border: 2px solid #FFFF00; 
+				background-image: url(menu.png); 
+				background-color:white; 
 			}
 			
 		</style>
@@ -60,7 +57,7 @@
 	
 	<body>
 		
-		<div id="sidebar">                  <!-- Sidebar (currently has only Goatfell in it) --> 
+		<div id="sidebar_goatfell">                  <!-- Sidebar (currently has only Goatfell in it) --> 
 			<h1> Congratulations! You have reached Goatfell </h1>             <!-- Heading -->
 			<p> Goat Fell (marked as Goatfell by the Ordnance Survey; Scottish Gaelic: Gaoda Bheinn) is the highest point on the Isle of Arran. At 874 metres (2,867 ft), it is one of four Corbetts on the island. The mountain, along with nearby Brodick Castle, is now owned by the National Trust for Scotland.The name is believed to mean 'Goat Mountain' (from the Norse geita).  </p> 
 			<img src= "goatfell_DTM.jpg" alt = "Goatfell" width = "380" height = "380"> <!-- Add images like this -->
@@ -71,7 +68,7 @@
 		
 		<h1 style= 'font-size: 20px; font-family: Arial; color:white; text-align: center; margin-bottom: -10px'>A location based game</h1>     <!--style changes the look of the text-->                          
 		
-		<button id= "toggle">Open Sidebar</button>   <!-- Create button to toggle sidebar -->
+		<input type= "button" id= "toggle" >   <!-- Create button to toggle sidebar -->
 		
 		<br>    <!-- Create some space between title and map --> 
 		<br> 
@@ -82,7 +79,7 @@
 		<div id='map'></div>        <!--Map-->
 		
 		
-		<div id="sidebar_two">                  <!-- Sidebar two --> 
+		<div id="sidebar_settings">                  <!-- Sidebar two --> 
 			<h1> Settings </h1> 				<!-- currently contains miscellaneous stuff --> 
 			<p><b> Sites visited:</b></p>
 			<p id="score"></p>
@@ -123,21 +120,22 @@
 			map.addControl( new L.Control.Compass({ position: 'topleft', showDigit:true}) );   // Add compass to map (using plugin)  
 
 			// ADD SIDEBAR TO DISPLAY INFORMATION ABOUT SITES 
-			var sidebar = L.control.sidebar ('sidebar', {         // Add sidebar to map 
+			var sidebar_goatfell = L.control.sidebar ('sidebar_goatfell', {         // Add sidebar to map 
 				position: 'left'
 			}); 
-			map.addControl(sidebar); 
+			map.addControl(sidebar_goatfell); 
+			
 			
 			// ADD SIDEBAR WITH ADDITIONAL INFORMATION 
-			var sidebar_two = L.control.sidebar('sidebar_two', {
+			var sidebar_settings = L.control.sidebar('sidebar_settings', {
 				position: 'right' 
 			}); 
-			map.addControl(sidebar_two);    // Add sidebar 
+			map.addControl(sidebar_settings);    // Add sidebar 
 			
 			document.getElementById("toggle").onclick = Toggle; // Link toggle button to sidebar 
 			
 			function Toggle () { 
-				sidebar_two.toggle(); // Function to toggle sidebar 
+				sidebar_settings.toggle(); // Function to toggle sidebar 
 			}
 			
 			///////FUNCTION FOR GEOLOCATION//////////
@@ -169,18 +167,24 @@
 				
 				//USE FOR LOOP TO CHECK IF CURRENT LOCATION IS WITHIN INNER GEOFENCE (AND THEREFORE PROVIDES INFORMATION ABOUT SITE)
 				const innerbufferList = [inner_geofence1,inner_geofence2, inner_geofence3, inner_geofence4, inner_geofence5, inner_geofence6];      // Store poly(buffers) in an array
+				
 				const marker = [g, ds, cs, gr, hc, kd];  // Array of geosite markers 
+				 
+				
 				for ( let i = 0; i < innerbufferList.length; i++) {      // For each item in the array 
 					if (turf.booleanWithin(geopoint, innerbufferList[i])) {					// if current location is within geofence
 						marker[i].bindPopup("Well done you found the site!").openPopup();     // Add a popup to the relevant marker 
+						
 						if ( geofence_tracker [i] == 0) {     // If current geofence tracker value is 0 
 							geofence_tracker[i] = 1; 		// Change tracker to 1 
 							points = 0;      //Add point to rewards  
 							for(let j in geofence_tracker) { points += geofence_tracker[j]; } // for each site in geofence  tracker, points = geofence tracker 
 							document.getElementById("score").innerHTML = points; //Display rewards on interface 
-							sidebar.show();                              // Show sidebar when in geofence 
+							
+							sidebar_goatfell.show();                              // Show sidebar when in geofence 
+							
 							marker[i].on('click', function () {    // Click marker to show sidebar in case it gets closed 
-								sidebar.show();  
+								sidebar_goatfell.show();  
 							}); 
 							}  // bracket for nested if statement
 					} else { 
@@ -206,7 +210,7 @@
 			
 			//CREATE FIRST SITE//							
 			var site_one = turf.point([-1.833031,53.805585]);					 // Turf point 
-			let inner_geofence1 = turf.buffer(site_one, 0.05, {units: 'miles', steps: 32}); 	// Add inner buffer //Change steps to make buffer rounder 
+			let inner_geofence1 = turf.buffer(site_one, 0.9, {units: 'miles', steps: 32}); 	// Add inner buffer //Change steps to make buffer rounder 
 			let outer_geofence1 = turf.buffer(site_one, 0.1, {units: 'miles', steps: 32}); // Add outer buffer 
 			var g = L.marker([53.805585,-1.833031], {icon:goatfell}).bindPopup("Goatfell").addTo(map);     // Add custom icons as regular markers (didnt really need turf for this bit)
 			L.geoJSON(inner_geofence1).addTo(map); 									// Add inner buffer to map 
@@ -214,7 +218,7 @@
 				
 			//CREATE SECOND SITE///
 			var site_two = turf.point([-1.833460,53.813846]);					 // Turf point 
-			let inner_geofence2 = turf.buffer(site_two, 0.9, {units: 'miles', steps:32}); 	// Add inner buffer
+			let inner_geofence2 = turf.buffer(site_two, 0.1, {units: 'miles', steps:32}); 	// Add inner buffer
 			let outer_geofence2 = turf.buffer(site_two, 0.1, {units: 'miles', steps:32}); // Add outer buffer 
 			var ds = L.marker([53.813846,-1.833460], {icon:drumadoonsill}).bindPopup("Drumadoon Sill").addTo(map); // Add custom icon as regular marker 
 			L.geoJSON(inner_geofence2).addTo(map); 									// Add inner buffer to map 
@@ -272,6 +276,10 @@
 					label : "Goatfell", 
 					type: "image", 
 					url: "mountain.png",  
+				}, {
+					label: "Drumadoon Sill", 
+					type: "image", 
+					url: "landslide.png",
 				}]
 			}).addTo(map); 
 	</script>
