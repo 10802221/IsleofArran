@@ -59,8 +59,9 @@
 		
 		<div id="sidebar_goatfell">                  <!-- Sidebar (currently has only Goatfell in it) --> 
 			<h1> Congratulations! You have reached Goatfell </h1>             <!-- Heading -->
+			<p><b>Height: </b> 874m </p>
 			<p> Goat Fell (marked as Goatfell by the Ordnance Survey; Scottish Gaelic: Gaoda Bheinn) is the highest point on the Isle of Arran. At 874 metres (2,867 ft), it is one of four Corbetts on the island. The mountain, along with nearby Brodick Castle, is now owned by the National Trust for Scotland.The name is believed to mean 'Goat Mountain' (from the Norse geita).  </p> 
-			<img src= "goatfell_DTM.jpg" alt = "Goatfell" width = "380" height = "380"> <!-- Add images like this -->
+			<img src= "goatfell_map.jpeg" alt = "Goatfell" width = "400" height = "330"> <!-- Add images like this -->
 			<p> Some information about Arran geology here </p> 
 			<img src= "Goatfell_NE.jpg" alt= "Corries" width= "380" height= "380">
 			<P> These maps display corries, glacial features </p> 
@@ -271,6 +272,7 @@
 			//ADD LEGEND 
 			L.control.Legend({           // Add legend to map 
 				position: "bottomright", 
+				collapsed: true,      // Collapse legend into small icoon to be expanded 
 				legends: [{ 
 					label : "Goatfell", 
 					type: "image", 
