@@ -38,15 +38,15 @@
 			}
 			
 			#toggle {
-				line-height: 32px;
-				width: 37px; 
+				line-height: 30px;
+				width: 36px; 
 				margin-top: 50px;
 				margin-right: 60px;
 				position: absolute;
 				top: 0;
 				right: 0;
-				background-image: url(menu.png); 
-				background-color:white; 
+				background-image: url(interface.png); 
+				background-color: white; 
 			}
 			
 		</style>
@@ -118,8 +118,9 @@
 			map.locate({setView: false, maxZoom: 14, watch: true});			//Add geolocation watch = true means location is constantly watched rather than detected once  
 	
 			//ADD COMPASS 
-			map.addControl( new L.Control.Compass({ position: 'topleft', autoActive: false}) );   // Add compass to map (using plugin)  
-
+			comp = map.addControl( new L.Control.Compass({ position: 'topleft', autoActive: true}) );   // Add compass to map (using plugin)  
+			comp.setAngle(90); 
+			
 			// ADD SIDEBAR TO DISPLAY INFORMATION ABOUT SITES 
 			var sidebar_goatfell = L.control.sidebar ('sidebar_goatfell', {         // Add sidebar to map 
 				position: 'left'
@@ -272,11 +273,31 @@
 			//ADD LEGEND 
 			L.control.Legend({           // Add legend to map 
 				position: "bottomright", 
-				collapsed: true,      // Collapse legend into small icoon to be expanded 
+				collapsed: true,      // Collapse legend into small icon to be expanded 
 				legends: [{ 
 					label : "Goatfell", 
 					type: "image", 
 					url: "mountain.png",  
+				},{ 
+					label: "Drumadoon Sill", 
+					type: "image", 
+					url: "landslide.png", 
+				},{ 
+					label: "Corrie Sanstone", 
+					type: "image", 
+					url: "sailboat.png", 
+				},{ 
+					label: "Glen Rosa", 
+					type: "image", 
+					url: "river.png",
+				},{ 
+					label: "Hutton's Unconformity", 
+					type: "image", 
+					url: "tower.png", 
+				},{ 
+					label: "Kidonan Dykes", 
+					type: "image", 
+					url: "sunset.png",
 				}]
 			}).addTo(map); 
 	</script>
