@@ -57,16 +57,6 @@
 	
 	<body>
 		
-		<div id="sidebar_goatfell">                  <!-- Sidebar (currently has only Goatfell in it) --> 
-			<h1> Congratulations! You have reached Goatfell </h1>             <!-- Heading -->
-			<p><b>Height: </b> 874m </p>
-			<p> Goat Fell (marked as Goatfell by the Ordnance Survey; Scottish Gaelic: Gaoda Bheinn) is the highest point on the Isle of Arran. At 874 metres (2,867 ft), it is one of four Corbetts on the island. The mountain, along with nearby Brodick Castle, is now owned by the National Trust for Scotland.The name is believed to mean 'Goat Mountain' (from the Norse geita).  </p> 
-			<img src= "goatfell_map.jpeg" alt = "Goatfell" width = "400" height = "330"> <!-- Add images like this -->
-			<p> Some information about Arran geology here </p> 
-			<img src= "Goatfell_NE.jpg" alt= "Corries" width= "380" height= "380">
-			<P> These maps display corries, glacial features </p> 
-		</div> 
-		
 		<h1 style= 'font-size: 20px; font-family: Arial; color:white; text-align: center; margin-bottom: -10px'>A location based game</h1>     <!--style changes the look of the text-->                          
 		
 		<input type= "button" id= "toggle" >   <!-- Create button to toggle sidebar -->
@@ -117,17 +107,7 @@
 			map.locate({setView: false, maxZoom: 14, watch: true});			//Add geolocation watch = true means location is constantly watched rather than detected once  
 	
 			//ADD COMPASS 
-			var comp = map.addControl( new L.Control.Compass({ position: 'topleft', autoActive: true}) ).onclick = compass ;   // Add compass to map (using plugin)  
-			function compass () { 
-				comp.setAngle(90); 
-			} 
-			
-			// ADD SIDEBAR TO DISPLAY INFORMATION ABOUT SITES 
-			var sidebar_goatfell = L.control.sidebar ('sidebar_goatfell', {         // Add sidebar to map 
-				position: 'left'
-			}); 
-			map.addControl(sidebar_goatfell); 
-			
+			map.addControl( new L.Control.Compass({ position: 'topleft', autoActive: true}));   // Add compass to map (using plugin)  
 			
 			// ADD SIDEBAR WITH ADDITIONAL INFORMATION 
 			var sidebar_settings = L.control.sidebar('sidebar_settings', {
@@ -173,26 +153,21 @@
 				
 				const marker = [g, ds, cs, gr, hc, kd];  // Array of geosite markers 
 				 
+				
 				for ( let i = 0; i < innerbufferList.length; i++) {      // For each item in the array 
 					if (turf.booleanWithin(geopoint, innerbufferList[i])) {					// if current location is within geofence
-						marker[i].bindPopup("Well done you found the site!").openPopup();     // Add a popup to the relevant marker 
-						
+						//marker[i].bindPopup("Well done you found the site!").openPopup();     // Add a popup to the relevant marker 
 						if ( geofence_tracker [i] == 0) {     // If current geofence tracker value is 0 
 							geofence_tracker[i] = 1; 		// Change tracker to 1 
 							points = 0;      //Add point to rewards  
 							for(let j in geofence_tracker) { points += geofence_tracker[j]; } // for each site in geofence  tracker, points = geofence tracker 
 							document.getElementById("score").innerHTML = points; //Display rewards on interface 
-							
-							sidebar_goatfell.show();                              // Show sidebar when in geofence 
-							
-							marker[i].on('click', function () {    // Click marker to show sidebar in case it gets closed 
-								sidebar_goatfell.show();  
-							}); 
-							}  // bracket for nested if statement
-					} else { 
-					}
-				}
+						}
+					}  // bracket for nested if statement
+				} 
 			}
+			
+			
 			
 			/////ICON CLASS FOR CUSTOM ICONS////
 			var arranIcon = L.Icon.extend({
@@ -210,14 +185,20 @@
 				huttonsunconformity = new arranIcon({iconUrl: 'tower.png'}),
 				kildonandykes = new arranIcon({iconUrl: 'sunset.png'}); // Semi colon on last one
 			
-			//CREATE FIRST SITE//							
+			//CREATE FIRST SITE//	//GOATFELL    						
 			var site_one = turf.point([-1.833031,53.805585]);					 // Turf point 
 			let inner_geofence1 = turf.buffer(site_one, 0.9, {units: 'miles', steps: 32}); 	// Add inner buffer //Change steps to make buffer rounder 
 			let outer_geofence1 = turf.buffer(site_one, 0.1, {units: 'miles', steps: 32}); // Add outer buffer 
-			var g = L.marker([53.805585,-1.833031], {icon:goatfell}).bindPopup("Goatfell").addTo(map);     // Add custom icons as regular markers (didnt really need turf for this bit)
+			var g = L.marker([53.805585,-1.833031], {icon:goatfell}).addTo(map);     // Add custom icons as regular markers (didnt really need turf for this bit)
 			L.geoJSON(inner_geofence1).addTo(map); 									// Add inner buffer to map 
 			L.geoJSON(outer_geofence1, {style: myStyle}).addTo(map); 			// Add outer buffer with style 
-				
+			//create content for Goatfell 
+			var g_popupContent = ("<p> Well done! You found Goatfell! </p> <img src= 'goatfell.jpg'/>")   //Add content using HTML tags 
+			g.bindPopup(g_popupContent, { 
+				maxWidth: "auto"  // Makes sure popups accomadate photos 
+			}).openPopup();   //  Opens popup (for now) 
+			
+			
 			//CREATE SECOND SITE///
 			var site_two = turf.point([-1.833460,53.813846]);					 // Turf point 
 			let inner_geofence2 = turf.buffer(site_two, 0.1, {units: 'miles', steps:32}); 	// Add inner buffer
