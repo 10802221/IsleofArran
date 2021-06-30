@@ -75,8 +75,7 @@
 		<br> 
 		<br>
 		<br> 
-	
-
+		
 		<div id='map'></div>        <!--Map-->
 		
 		
@@ -118,8 +117,10 @@
 			map.locate({setView: false, maxZoom: 14, watch: true});			//Add geolocation watch = true means location is constantly watched rather than detected once  
 	
 			//ADD COMPASS 
-			map.addControl( new L.Control.Compass({ position: 'topleft', autoActive: true, angleOffset: 90}) );   // Add compass to map (using plugin)  
-		
+			var comp = map.addControl( new L.Control.Compass({ position: 'topleft', autoActive: true}) ).onclick = compass ;   // Add compass to map (using plugin)  
+			function compass () { 
+				comp.setAngle(90); 
+			} 
 			
 			// ADD SIDEBAR TO DISPLAY INFORMATION ABOUT SITES 
 			var sidebar_goatfell = L.control.sidebar ('sidebar_goatfell', {         // Add sidebar to map 
