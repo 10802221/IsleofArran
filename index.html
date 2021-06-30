@@ -39,13 +39,12 @@
 			
 			#toggle {
 				line-height: 30px;
-				width: 36px; 
+				width: 60px; 
 				margin-top: 50px;
 				margin-right: 60px;
 				position: absolute;
 				top: 0;
-				right: 0;
-				background-image: url(interface.png); 
+				right: 0; 
 				background-color: white; 
 			}
 			
@@ -59,7 +58,7 @@
 		
 		<h1 style= 'font-size: 20px; font-family: Arial; color:white; text-align: center; margin-bottom: -10px'>A location based game</h1>     <!--style changes the look of the text-->                          
 		
-		<input type= "button" id= "toggle" >   <!-- Create button to toggle sidebar -->
+		<button type= "button" id= "toggle">Settings</button>   <!-- Create button to toggle sidebar -->
 		
 		<br>    <!-- Create some space between title and map --> 
 		<br> 
@@ -69,7 +68,7 @@
 		<div id='map'></div>        <!--Map-->
 		
 		
-		<div id="sidebar_settings">                  <!-- Sidebar two --> 
+		<div id="sidebar_settings">                  <!-- Sidebar --> 
 			<h1> Settings </h1> 				<!-- currently contains miscellaneous stuff --> 
 			<p><b> Sites visited:</b></p>
 			<p id="score"></p>
@@ -109,7 +108,7 @@
 			//ADD COMPASS 
 			map.addControl( new L.Control.Compass({ position: 'topleft', autoActive: true}));   // Add compass to map (using plugin)  
 			
-			// ADD SIDEBAR WITH ADDITIONAL INFORMATION 
+			// ADD SIDEBAR WITH SETTINGS INFORMATION 
 			var sidebar_settings = L.control.sidebar('sidebar_settings', {
 				position: 'right' 
 			}); 
@@ -151,19 +150,18 @@
 				//USE FOR LOOP TO CHECK IF CURRENT LOCATION IS WITHIN INNER GEOFENCE (AND THEREFORE PROVIDES INFORMATION ABOUT SITE)
 				const innerbufferList = [inner_geofence1,inner_geofence2, inner_geofence3, inner_geofence4, inner_geofence5, inner_geofence6];      // Store poly(buffers) in an array
 				
-				const marker = [g, ds, cs, gr, hc, kd];  // Array of geosite markers 
-				 
+				const popups = [g_popup, ds_popup, cs_popup, gr_popup, hc_popup, kd_popup];   // Array of markers (with popups attached) 
 				
 				for ( let i = 0; i < innerbufferList.length; i++) {      // For each item in the array 
 					if (turf.booleanWithin(geopoint, innerbufferList[i])) {					// if current location is within geofence
-						//marker[i].bindPopup("Well done you found the site!").openPopup();     // Add a popup to the relevant marker 
+						popups[i].openPopup();     //Open relevant popup 
 						if ( geofence_tracker [i] == 0) {     // If current geofence tracker value is 0 
 							geofence_tracker[i] = 1; 		// Change tracker to 1 
 							points = 0;      //Add point to rewards  
 							for(let j in geofence_tracker) { points += geofence_tracker[j]; } // for each site in geofence  tracker, points = geofence tracker 
 							document.getElementById("score").innerHTML = points; //Display rewards on interface 
 						}
-					}  // bracket for nested if statement
+					}  
 				} 
 			}
 			
@@ -187,62 +185,88 @@
 			
 			//CREATE FIRST SITE//	//GOATFELL    						
 			var site_one = turf.point([-1.833031,53.805585]);					 // Turf point 
-			let inner_geofence1 = turf.buffer(site_one, 0.9, {units: 'miles', steps: 32}); 	// Add inner buffer //Change steps to make buffer rounder 
+			let inner_geofence1 = turf.buffer(site_one, 0.1, {units: 'miles', steps: 32}); 	// Add inner buffer //Change steps to make buffer rounder 
 			let outer_geofence1 = turf.buffer(site_one, 0.1, {units: 'miles', steps: 32}); // Add outer buffer 
 			var g = L.marker([53.805585,-1.833031], {icon:goatfell}).addTo(map);     // Add custom icons as regular markers (didnt really need turf for this bit)
 			L.geoJSON(inner_geofence1).addTo(map); 									// Add inner buffer to map 
 			L.geoJSON(outer_geofence1, {style: myStyle}).addTo(map); 			// Add outer buffer with style 
 			//create content for Goatfell 
-			var g_popupContent = ("<p> Well done! You found Goatfell! </p> <img src= 'goatfell.jpg'/>")   //Add content using HTML tags 
-			g.bindPopup(g_popupContent, { 
+			var g_popupContent = ("<b> Well done! You found Goatfell! </b> <p>Big mountain</p> <img src= 'goatfell.jpg'/>")   //Add content using HTML tags 
+			var g_popup = g.bindPopup(g_popupContent, { 
 				maxWidth: "auto"  // Makes sure popups accomadate photos 
-			}).openPopup();   //  Opens popup (for now) 
+			});    
 			
 			
-			//CREATE SECOND SITE///
+			//CREATE SECOND SITE//    //Drumadoon Sill 
 			var site_two = turf.point([-1.833460,53.813846]);					 // Turf point 
 			let inner_geofence2 = turf.buffer(site_two, 0.1, {units: 'miles', steps:32}); 	// Add inner buffer
 			let outer_geofence2 = turf.buffer(site_two, 0.1, {units: 'miles', steps:32}); // Add outer buffer 
-			var ds = L.marker([53.813846,-1.833460], {icon:drumadoonsill}).bindPopup("Drumadoon Sill").addTo(map); // Add custom icon as regular marker 
+			var ds = L.marker([53.813846,-1.833460], {icon:drumadoonsill}).addTo(map); // Add custom icon as regular marker 
 			L.geoJSON(inner_geofence2).addTo(map); 									// Add inner buffer to map 
 			L.geoJSON(outer_geofence2, {style: myStyle}).addTo(map); 			// Add outer buffer to map with style 
-				
-				
-			//CREATE THIRD SITE//
+			//Create content for Drumadoon Sill 	
+			var ds_popupContent = ("<b> Well done! You found Drumadoon Sill! </b> <p>Big Cliff</p> <img src= 'sill.jpg'/>")   //Add content using HTML tags 
+			var ds_popup = ds.bindPopup(ds_popupContent, { 
+				maxWidth: "auto"  // Makes sure popups accomadate photos 
+			});
+
+
+			//CREATE THIRD SITE//     //Corrie Sandstone 
 			var site_three  = turf.point([-1.848824, 53.816050]); // Turf point 
 			let inner_geofence3 = turf.buffer(site_three, 0.1, {units:'miles', steps:32}); // Add inner buffer 
 			let outer_geofence3 = turf.buffer(site_three, 0.1, {units: 'miles',steps:32 }); // Add outer buffer
-			var cs = L.marker([53.816050,-1.848824], {icon:corriesandstone}).bindPopup("Corrie sandstone").addTo(map); // Add custom icon 
+			var cs = L.marker([53.816050,-1.848824], {icon:corriesandstone}).addTo(map); // Add custom icon 
 			L.geoJSON(inner_geofence3).addTo(map); 										// Add inner buffer to map 
 			L.geoJSON(outer_geofence3, {style: myStyle}).addTo(map); 				// Add outer buffer to map using style
-				 
+			//Create content for Corrie Sandstone 
+			var cs_popupContent = ("<b> Well done! You found Corrie Sandstone! </b> <p>Red rocks</p> <img src= 'sandstone.jpg'/>")   //Add content using HTML tags 
+			var cs_popup = cs.bindPopup(cs_popupContent, { 
+				maxWidth: "auto"  // Makes sure popups accomadate photos 
+			});
 				
-			///CREATE FORTH SITE////////
+			//CREATE FORTH SITE// 	//Glen Rosa
 			var site_four  = turf.point([ -1.855304, 53.806041]);               // Turf point
 			let inner_geofence4 = turf.buffer(site_four, 0.1, {units:'miles',steps:32});   // Add inner buffer 
 			let outer_geofence4 = turf.buffer(site_four, 0.1,{units: 'miles',steps:32});    // Add outer buffer
 			var gr = L.marker([53.806041,-1.855304], {icon:glenrosa}).bindPopup("Glen Rosa").addTo(map);  // Add custom icon 
 			L.geoJSON(inner_geofence4).addTo(map); 										// Add inner buffer to map 
 			L.geoJSON(outer_geofence4, {style: myStyle}).addTo(map); 				// Add outer buffer to map using style defined above 
-				 
+			// Create content for Glen Rosa
+			var gr_popupContent = ("<b> Well done! You found Glen Rosa! </b> <p>Big valley</p> <img src= 'glenrosa.jpg'/>")   //Add content using HTML tags 
+			var gr_popup = gr.bindPopup(gr_popupContent, { 
+				maxWidth: "auto"  // Makes sure popups accomadate photos 
+			});
+
 				
-			///////CREATE FIFTH SITE////////
+			//CREATE FIFTH SITE//	//Hutton's Unconformity 
 			var site_five  = turf.point([-1.831529,53.818457]);               // Turf point
 			let inner_geofence5 = turf.buffer(site_five, 0.1, {units:'miles', steps:32});   // Add inner buffer 
 			let outer_geofence5 = turf.buffer(site_five, 0.1,{units: 'miles', steps:32});    // Add outer buffer
 		    var hc = L.marker([53.818457, -1.831529], {icon: huttonsunconformity}).bindPopup("Hutton's Unconformity").addTo(map); //Add custom icon   
 			L.geoJSON(inner_geofence5).addTo(map); 										// Add inner buffer to map 
 			L.geoJSON(outer_geofence5, {style: myStyle}).addTo(map); 				// Add outer buffer to map using style defined above
+			//Create content for Huttons unconformity 
+			var hc_popupContent = ("<b> Well done! You found Huttons Unconformity! </b> <p>Scientific breakthrough</p> <img src= 'hutton.jpg'/>")   //Add content using HTML tags 
+			var hc_popup = hc.bindPopup(hc_popupContent, { 
+				maxWidth: "auto"  // Makes sure popups accomadate photos 
+			});
 				
-				
-			////CREATE SIXTH SITE///////
+			//CREATE SIXTH SITE//		// Kildonan Dykes 
 			var site_six  = turf.point([-1.826278, 53.810118]);               // Turf point
-			let inner_geofence6 = turf.buffer(site_six, 0.1, {units:'miles', steps:32});   // Add inner buffer 
+			let inner_geofence6 = turf.buffer(site_six, 0.9, {units:'miles', steps:32});   // Add inner buffer 
 			let outer_geofence6 = turf.buffer(site_six, 0.1,{units: 'miles', steps:32});    // Add outer buffer
 			var kd = L.marker([53.810118,-1.826278], {icon: kildonandykes}).bindPopup("Kildonan Dykes").addTo(map);  // Add custom icon
 			L.geoJSON(inner_geofence6).addTo(map); 										// Add inner buffer to map 
 			L.geoJSON(outer_geofence6, {style: myStyle}).addTo(map); 				// Add outer buffer to map using style defined above 
-							
+			//Create content for Kildonan Dykes 
+			var kd_popupContent = ("<b> Well done! You found Kildonan Dykes! </b> <p>Long rocks</p> <img src= 'dykes.jpg'/>")   //Add content using HTML tags 
+			var kd_popup = kd.bindPopup(kd_popupContent, { 
+				maxWidth: "auto"  // Makes sure popups accomadate photos 
+			});
+
+
+
+			
 			// CALL LOCATION FUNCTION 		
 			map.on('locationfound', onLocationFound); 
 			
