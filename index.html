@@ -97,7 +97,7 @@
 			
 			//CREATE MAP 
 			const map = L.map('map');
-			const mapCentre = L.latLng(53.805136, -1.840275);
+			const mapCentre = L.latLng(53.792502, -1.755063);
 			map.setView(mapCentre, 14);
 			const tiles = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'});
 			tiles.addTo(map); // Add tiles to map 
@@ -176,18 +176,18 @@
 				}
 			});
 			 
-			var goatfell = new arranIcon({iconUrl:'mountain.png'}),       // Remember to reference icons in final thing
-				drumadoonsill = new arranIcon({iconUrl: 'landslide.png'}),  // Add each new icon to class using URL 
-				corriesandstone = new arranIcon({iconUrl: 'sailboat.png'}),
-				glenrosa = new arranIcon({iconUrl: 'river.png'}),
-				huttonsunconformity = new arranIcon({iconUrl: 'tower.png'}),
+			var goatfell = new arranIcon({iconUrl:'mountain.png'}),       // <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+				drumadoonsill = new arranIcon({iconUrl: 'moher-cliffs.png'}), // <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>  
+				corriesandstone = new arranIcon({iconUrl: 'zen-rocks-stack.png'}),  // <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+				glenrosa = new arranIcon({iconUrl: 'river.png'}),                  // <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+				huttonsunconformity = new arranIcon({iconUrl: 'tower.png'}), 
 				kildonandykes = new arranIcon({iconUrl: 'sunset.png'}); // Semi colon on last one
 			
 			//CREATE FIRST SITE//	//GOATFELL    						
-			var site_one = turf.point([-1.833031,53.805585]);					 // Turf point 
+			var site_one = turf.point([-1.747301,53.793542]);					 // Turf point 
 			let inner_geofence1 = turf.buffer(site_one, 0.1, {units: 'miles', steps: 32}); 	// Add inner buffer //Change steps to make buffer rounder 
 			let outer_geofence1 = turf.buffer(site_one, 0.1, {units: 'miles', steps: 32}); // Add outer buffer 
-			var g = L.marker([53.805585,-1.833031], {icon:goatfell}).addTo(map);     // Add custom icons as regular markers (didnt really need turf for this bit)
+			var g = L.marker([53.793542, -1.747301], {icon:goatfell}).addTo(map);     // Add custom icons as regular markers (didnt really need turf for this bit)
 			L.geoJSON(inner_geofence1).addTo(map); 									// Add inner buffer to map 
 			L.geoJSON(outer_geofence1, {style: myStyle}).addTo(map); 			// Add outer buffer with style 
 			//create content for Goatfell 
@@ -198,10 +198,10 @@
 			
 			
 			//CREATE SECOND SITE//    //Drumadoon Sill 
-			var site_two = turf.point([-1.833460,53.813846]);					 // Turf point 
+			var site_two = turf.point([ -1.749468,53.795779]);					 // Turf point 
 			let inner_geofence2 = turf.buffer(site_two, 0.1, {units: 'miles', steps:32}); 	// Add inner buffer
 			let outer_geofence2 = turf.buffer(site_two, 0.1, {units: 'miles', steps:32}); // Add outer buffer 
-			var ds = L.marker([53.813846,-1.833460], {icon:drumadoonsill}).addTo(map); // Add custom icon as regular marker 
+			var ds = L.marker([53.795779,-1.749468], {icon:drumadoonsill}).addTo(map); // Add custom icon as regular marker 
 			L.geoJSON(inner_geofence2).addTo(map); 									// Add inner buffer to map 
 			L.geoJSON(outer_geofence2, {style: myStyle}).addTo(map); 			// Add outer buffer to map with style 
 			//Create content for Drumadoon Sill 	
@@ -212,10 +212,10 @@
 
 
 			//CREATE THIRD SITE//     //Corrie Sandstone 
-			var site_three  = turf.point([-1.848824, 53.816050]); // Turf point 
+			var site_three  = turf.point([-1.756825,53.797757]); // Turf point 
 			let inner_geofence3 = turf.buffer(site_three, 0.1, {units:'miles', steps:32}); // Add inner buffer 
 			let outer_geofence3 = turf.buffer(site_three, 0.1, {units: 'miles',steps:32 }); // Add outer buffer
-			var cs = L.marker([53.816050,-1.848824], {icon:corriesandstone}).addTo(map); // Add custom icon 
+			var cs = L.marker([53.797757,-1.756825], {icon:corriesandstone}).addTo(map); // Add custom icon 
 			L.geoJSON(inner_geofence3).addTo(map); 										// Add inner buffer to map 
 			L.geoJSON(outer_geofence3, {style: myStyle}).addTo(map); 				// Add outer buffer to map using style
 			//Create content for Corrie Sandstone 
@@ -225,10 +225,10 @@
 			});
 				
 			//CREATE FORTH SITE// 	//Glen Rosa
-			var site_four  = turf.point([ -1.855304, 53.806041]);               // Turf point
+			var site_four  = turf.point([-1.772531, 53.801351]);               // Turf point
 			let inner_geofence4 = turf.buffer(site_four, 0.1, {units:'miles',steps:32});   // Add inner buffer 
 			let outer_geofence4 = turf.buffer(site_four, 0.1,{units: 'miles',steps:32});    // Add outer buffer
-			var gr = L.marker([53.806041,-1.855304], {icon:glenrosa}).bindPopup("Glen Rosa").addTo(map);  // Add custom icon 
+			var gr = L.marker([53.801351,-1.772531], {icon:glenrosa}).bindPopup("Glen Rosa").addTo(map);  // Add custom icon 
 			L.geoJSON(inner_geofence4).addTo(map); 										// Add inner buffer to map 
 			L.geoJSON(outer_geofence4, {style: myStyle}).addTo(map); 				// Add outer buffer to map using style defined above 
 			// Create content for Glen Rosa
@@ -239,10 +239,10 @@
 
 				
 			//CREATE FIFTH SITE//	//Hutton's Unconformity 
-			var site_five  = turf.point([-1.831529,53.818457]);               // Turf point
+			var site_five  = turf.point([-1.754110,53.785572]);               // Turf point
 			let inner_geofence5 = turf.buffer(site_five, 0.1, {units:'miles', steps:32});   // Add inner buffer 
 			let outer_geofence5 = turf.buffer(site_five, 0.1,{units: 'miles', steps:32});    // Add outer buffer
-		    var hc = L.marker([53.818457, -1.831529], {icon: huttonsunconformity}).bindPopup("Hutton's Unconformity").addTo(map); //Add custom icon   
+		    var hc = L.marker([53.785572,-1.754110], {icon: huttonsunconformity}).bindPopup("Hutton's Unconformity").addTo(map); //Add custom icon   
 			L.geoJSON(inner_geofence5).addTo(map); 										// Add inner buffer to map 
 			L.geoJSON(outer_geofence5, {style: myStyle}).addTo(map); 				// Add outer buffer to map using style defined above
 			//Create content for Huttons unconformity 
@@ -252,10 +252,10 @@
 			});
 				
 			//CREATE SIXTH SITE//		// Kildonan Dykes 
-			var site_six  = turf.point([-1.826278, 53.810118]);               // Turf point
-			let inner_geofence6 = turf.buffer(site_six, 0.9, {units:'miles', steps:32});   // Add inner buffer 
+			var site_six  = turf.point([-1.754213,53.804011 ]);               // Turf point
+			let inner_geofence6 = turf.buffer(site_six, 0.1 , {units:'miles', steps:32});   // Add inner buffer 
 			let outer_geofence6 = turf.buffer(site_six, 0.1,{units: 'miles', steps:32});    // Add outer buffer
-			var kd = L.marker([53.810118,-1.826278], {icon: kildonandykes}).bindPopup("Kildonan Dykes").addTo(map);  // Add custom icon
+			var kd = L.marker([53.804011,-1.754213], {icon: kildonandykes}).bindPopup("Kildonan Dykes").addTo(map);  // Add custom icon
 			L.geoJSON(inner_geofence6).addTo(map); 										// Add inner buffer to map 
 			L.geoJSON(outer_geofence6, {style: myStyle}).addTo(map); 				// Add outer buffer to map using style defined above 
 			//Create content for Kildonan Dykes 
@@ -287,11 +287,11 @@
 				},{ 
 					label: "Drumadoon Sill", 
 					type: "image", 
-					url: "landslide.png", 
+					url: "moher-cliffs.png", 
 				},{ 
-					label: "Corrie Sanstone", 
+					label: "Corrie Sandstone", 
 					type: "image", 
-					url: "sailboat.png", 
+					url: "zen-rocks-stack.png", 
 				},{ 
 					label: "Glen Rosa", 
 					type: "image", 
@@ -301,7 +301,7 @@
 					type: "image", 
 					url: "tower.png", 
 				},{ 
-					label: "Kidonan Dykes", 
+					label: "Kildonan Dykes", 
 					type: "image", 
 					url: "sunset.png",
 				}]
