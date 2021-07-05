@@ -106,7 +106,7 @@
 			map.locate({setView: false, maxZoom: 14, watch: true});			//Add geolocation watch = true means location is constantly watched rather than detected once  
 	
 			//ADD COMPASS 
-			map.addControl( new L.Control.Compass({ position: 'topleft', autoActive: true}));   // Add compass to map (using plugin)  
+			map.addControl( new L.Control.Compass({ position: 'topleft', autoActive: true, showDigit: true}));   // Add compass to map (using plugin)  
 			
 			// ADD SIDEBAR WITH SETTINGS INFORMATION 
 			var sidebar_settings = L.control.sidebar('sidebar_settings', {
@@ -185,7 +185,7 @@
 			
 			//CREATE FIRST SITE//	//GOATFELL    						
 			var site_one = turf.point([-1.747301,53.793542]);					 // Turf point 
-			let inner_geofence1 = turf.buffer(site_one, 0.1, {units: 'miles', steps: 32}); 	// Add inner buffer //Change steps to make buffer rounder 
+			let inner_geofence1 = turf.buffer(site_one, 0.4, {units: 'miles', steps: 32}); 	// Add inner buffer //Change steps to make buffer rounder 
 			let outer_geofence1 = turf.buffer(site_one, 0.1, {units: 'miles', steps: 32}); // Add outer buffer 
 			var g = L.marker([53.793542, -1.747301], {icon:goatfell}).addTo(map);     // Add custom icons as regular markers (didnt really need turf for this bit)
 			L.geoJSON(inner_geofence1).addTo(map); 									// Add inner buffer to map 
