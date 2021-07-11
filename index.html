@@ -171,7 +171,7 @@
 				}
 			});
 			 
-			var goatfell = new arranIcons({iconUrl:'mountain.png'}),       // <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+			var goatfell = new arranIcon({iconUrl:'mountain.png'}),       // <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 				drumadoonsill = new arranIcon({iconUrl: 'moher-cliffs.png'}), // <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>  
 				corriesandstone = new arranIcon({iconUrl: 'zen-rocks-stack.png'}),  // <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 				glenrosa = new arranIcon({iconUrl: 'river.png'}),                  // <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
@@ -186,7 +186,7 @@
 			L.geoJSON(inner_geofence1).addTo(map); 									// Add inner buffer to map 
 			L.geoJSON(outer_geofence1, {style: myStyle}).addTo(map); 			// Add outer buffer with style 
 			//create content for Goatfell 
-			var g_popupContent = ("<b> Well done! You found Goatfell! </b> <p>Goatfell is the tallest peak on Arran, standing at 874m</p> <img src= 'goatfell_geology.png'/> <p> The mountain is volcanic in origin however the features visible on the map were created by glacial movement. To the east, glacial features such as aretes and corries are visible.</p> <img src= 'glenrosa.jpg'/>")   //Add content using HTML tags 
+			var g_popupContent = ("<b> Well done! You found Goatfell! </b> <p>Goatfell is the tallest peak on Arran, standing at 874m</p> <img src= 'goatfell_hillshade.png'/> <p> The mountain is volcanic in origin however the features visible on the map were created by glacial movement. To the east, glacial features such as aretes and corries are visible.</p> <img src= 'glenrosa.jpg'/>")   //Add content using HTML tags 
 			var g_popup = g.bindPopup(g_popupContent, { 
 				maxWidth: 300, 
 				maxHeight: 400// Makes sure popups accomadate photos 
