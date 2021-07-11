@@ -56,7 +56,7 @@
 		
 		<h1 style= 'font-size: 20px; font-family: Arial; color:white; text-align: center; margin-bottom: -10px'>A location based game</h1>     <!--style changes the look of the text-->                          
 		
-		<button type= "button" id= "toggle">Settings</button>   <!-- Create button to toggle sidebar -->
+		<button type= "button" id= "toggle">Menu</button>   <!-- Create button to toggle sidebar -->
 		
 		<br>    <!-- Create some space between title and map --> 
 		<br> 
@@ -67,15 +67,15 @@
 		
 		
 		<div id="sidebar_settings">                  <!-- Sidebar --> 
-			<h1> Settings </h1> 				<!-- currently contains miscellaneous stuff --> 
+			<h1> Score!</h1> 				<!-- currently contains miscellaneous stuff --> 
 			<p><b> Sites visited:</b></p>
 			<p id="score"></p>
 			<hr>
 			<p> How to play: </p> 
 			<p> 1. Navigate to sites <br> 2. Information about the sites will be shown when in close proximity <br> 3. Collect all the sites to win!</p> 
 		</div> 
+	
 		
-
 		<script>
 			
 			var loc = null;  // Location variable       
@@ -186,7 +186,7 @@
 			L.geoJSON(inner_geofence1).addTo(map); 									// Add inner buffer to map 
 			L.geoJSON(outer_geofence1, {style: myStyle}).addTo(map); 			// Add outer buffer with style 
 			//create content for Goatfell 
-			var g_popupContent = ("<b> Well done! You found Goatfell! </b> <p>Big mountain</p> <img src= 'Goatfelltest.png'/>")   //Add content using HTML tags 
+			var g_popupContent = ("<b> Well done! You found Goatfell! </b> <p>Goatfell is the tallest peak on Arran, standing at 874m</p> <img src= 'Goatfelltest.png'/> <p> The mountain is volcanic in origin however the features visible on the map were created by glacial movement</p>")   //Add content using HTML tags 
 			var g_popup = g.bindPopup(g_popupContent, { 
 				maxWidth: "auto"  // Makes sure popups accomadate photos 
 			});    
