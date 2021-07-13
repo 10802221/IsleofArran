@@ -74,8 +74,6 @@
 			<p> 1. Navigate to sites <br> 2. Information about the sites will be shown when in close proximity <br> 3. Collect all the sites to win!</p> 
 		</div> 
 		
-		<div id="time"> Tertiary, Quaternary period</div>
-	
 		
 		<script>
 			
@@ -181,7 +179,7 @@
 			
 			//CREATE FIRST SITE//	//GOATFELL    						
 			var site_one = turf.point([-1.747301,53.793542]);					 // Turf point 
-			let inner_geofence1 = turf.buffer(site_one, 0.4, {units: 'miles', steps: 32}); 	// Add inner buffer //Change steps to make buffer rounder 
+			let inner_geofence1 = turf.buffer(site_one, 0.1, {units: 'miles', steps: 32}); 	// Add inner buffer //Change steps to make buffer rounder 
 			let outer_geofence1 = turf.buffer(site_one, 0.1, {units: 'miles', steps: 32}); // Add outer buffer 
 			var g = L.marker([53.793542, -1.747301], {icon:goatfell}).addTo(map);     // Add custom icons as regular markers (didnt really need turf for this bit)
 			L.geoJSON(inner_geofence1).addTo(map); 									// Add inner buffer to map 
@@ -229,7 +227,7 @@
 			L.geoJSON(inner_geofence4).addTo(map); 										// Add inner buffer to map 
 			L.geoJSON(outer_geofence4, {style: myStyle}).addTo(map); 				// Add outer buffer to map using style defined above 
 			// Create content for Glen Rosa
-			var gr_popupContent = ("<b> Well done! You found Glen Rosa!</b> <br> <b> Dominant rock type: </b> Granite </p> <b> Periods: </b> Tertiary (60 million years ago), Quaternary (2.5 million years ago) </b> <img src= 'GlenRosaHillshade.PNG'/> <p> The diagram shows Glen Rosa facing North West</p> <img src='GlenRosaCrossSection.png' /> <p> This cross section demonstrates the U shaped valley perfectly </p>")   //Add content using HTML tags 
+			var gr_popupContent = ("<b> Well done! You found Glen Rosa!</b> <br> <b> Dominant rock type: </b> Granite </p> <b> Periods: </b> Tertiary (60 million years ago), Quaternary (2.5 million years ago) </b> <img src= 'GlenRosaHillshade.PNG'/><p> The diagram shows Glen Rosa facing North West</p> <img src='GlenRosaCrossSection.png' /> <p> This cross section demonstrates the U shaped valley perfectly </p> <img src='GlenRosaHydrology.PNG'/>")   //Add content using HTML tags 
 			var gr_popup = gr.bindPopup(gr_popupContent, { 
 				maxWidth: 300,				// Makes sure popups accomadate photos 
 				maxHeight: 400
