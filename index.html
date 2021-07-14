@@ -215,9 +215,10 @@
 			L.geoJSON(inner_geofence3).addTo(map); 										// Add inner buffer to map 
 			L.geoJSON(outer_geofence3, {style: myStyle}).addTo(map); 				// Add outer buffer to map using style
 			//Create content for Corrie Sandstone 
-			var cs_popupContent = ("<b> Well done! You found Corrie Sandstone! </b> <p>Red rocks</p> <img src= 'sandstone.jpg'/>")   //Add content using HTML tags 
+			var cs_popupContent = ("<b> Well done! You found Corrie Sandstone! </b> <br> <b> Dominant rock type: </b> Old red sandstone, Carboniferous rocks </p> <b> Periods: </b> Devonian (350 million years ago), Carboniferous (290 million years ago) </p> <p>This section of coastline represents millions of years of geological time on Arran. The layers of rock present here provide an indication of the past conditions of the island.</p> <img src= 'CorrieSandstoneGeology.PNG'/><p>This geological map provides a snapshot of the variety of rocks in the area </p> <p> The red sandstone resembles sand dunes present on earth today and were formed when Arran consisted of its own desert. Dry conditions prevailed when Arran was located at a similar latitiude as the Sahara is now. Sand was deposited in a large desert and shaped by strong winds. The rocks are a distinctive red colour due to Iron Oxide. </p> <img src='sandstone_photo.jpg'/> <p> Conglomerates present were formed when eroded sediment from the nearby Caladonian mountains was washed into the area by flooding. The lava represents a Carboniferous lava flow. Overall the red sandstone and Carboniferous rocks represent very different geological time periods with harsh conditions in the former and more tropical conditions in the latter</p>")   //Add content using HTML tags 
 			var cs_popup = cs.bindPopup(cs_popupContent, { 
-				maxWidth: "auto"  // Makes sure popups accomadate photos 
+				maxWidth: 300, 				// Makes sure popups accomadate photos
+				maxHeight: 400
 			});
 				
 			//CREATE FORTH SITE// 	//Glen Rosa
