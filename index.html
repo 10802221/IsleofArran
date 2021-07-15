@@ -188,7 +188,7 @@
 			//create content for Goatfell 
 			var g_popupContent = ("<b> Well done! You found Goatfell! </b> <br> <b> Dominant rock type:</b> Granite </p> <b> Periods: </b> Tertiary (60 million years ago), Quaternary (2.5 million years ago)</p> </b> <p>Goatfell (Gaoda Bheinn) is the highest peak in Arran, standing at 874m at the summit. Goatfell started life as a volcano and was shaped into its current form by glaciers during the last ice age. </p> <img src= 'goatfell_hillshade_2.PNG'/> <p> This map shows the North Arran Mountains, encompassing Goatfell and its surroundings.</p> <p> The North Arran Mountains were formed by a granite pluton forcing its way through Northern Arran. Plutons form when magmas rise through the crust into dome shaped intrusions which are then exposed over time by erosion.</p> <img src = 'pluton.jpg'/> <p> Of course, today the mountains are no longer domed shaped, having been shaped by quaternary glaciation. The angular peaks of Goatfell display great examples of erosional features. Two particularly visible on the map are aretes and corries. Corries are circular depressions which form as accumulated snow in hollows turns to ice. As the ice moves downhill, the bottom of the hollow is eroded. This erosion is uneven and causes a lip to form. When two corries erode back to back, an arete, a narrow ridge is formed </p>")   //Add content using HTML tags 
 			var g_popup = g.bindPopup(g_popupContent, { 
-				maxWidth: 300, 
+				maxWidth: 320, 
 				maxHeight: 400// Makes sure popups accomadate photos 
 			});    
 			
@@ -201,9 +201,10 @@
 			L.geoJSON(inner_geofence2).addTo(map); 									// Add inner buffer to map 
 			L.geoJSON(outer_geofence2, {style: myStyle}).addTo(map); 			// Add outer buffer to map with style 
 			//Create content for Drumadoon Sill 	
-			var ds_popupContent = ("<b> Well done! You found Drumadoon Sill! </b> <p>Big Cliff</p> <img src= 'sill.jpg'/>")   //Add content using HTML tags 
+			var ds_popupContent = ("<b> Well done! You found Drumadoon Sill! </b> <p>Big Cliff</p> <img src= 'sill_geology.jpg'/> <img src ='sill_cross_section.jpg' />")   //Add content using HTML tags 
 			var ds_popup = ds.bindPopup(ds_popupContent, { 
-				maxWidth: "auto"  // Makes sure popups accomadate photos 
+				maxWidth: 300, // Makes sure popups accomadate photos 
+				maxHeight: 400
 			});
 
 
