@@ -222,7 +222,7 @@
 				maxWidth: 320, // Makes sure popups accomadate photos 
 				maxHeight: 400
 			});
-
+			ds.off('click'); 
 
 			//CREATE THIRD SITE//     //Corrie Sandstone 
 			var site_three  = turf.point([ -1.759085,53.791152]); // Turf point 
@@ -237,7 +237,8 @@
 				maxWidth: 320, 				// Makes sure popups accomadate photos
 				maxHeight: 400
 			});
-				
+			cs.off('click');
+			
 			//CREATE FORTH SITE// 	//Glen Rosa
 			var site_four  = turf.point([-1.755351,53.795563]);               // Turf point
 			let inner_geofence4 = turf.buffer(site_four, 0.05, {units:'miles',steps:32});   // Add inner buffer 
@@ -251,7 +252,7 @@
 				maxWidth: 320,				// Makes sure popups accomadate photos 
 				maxHeight: 400
 			});
-
+			gr.off('click');
 				
 			//CREATE FIFTH SITE//	//Hutton's Unconformity 
 			var site_five  = turf.point([-1.756068,53.792363]);               // Turf point
@@ -266,7 +267,8 @@
 				maxWidth: 320,				// Makes sure popups accomadate photos 
 				maxHeight: 400
 			});
-				
+			hc.off('click'); 
+			
 			//CREATE SIXTH SITE//		// Kildonan Dykes 
 			var site_six  = turf.point([ -1.749965,53.790821 ]);               // Turf point
 			let inner_geofence6 = turf.buffer(site_six, 0.05, {units:'miles', steps:32});   // Add inner buffer 
@@ -280,8 +282,7 @@
 				maxWidth: 320, // Makes sure popups accomadate photos 
 				maxHeight: 400
 			});
-
-
+			kd.off('click');
 
 			
 			// CALL LOCATION FUNCTION 		
