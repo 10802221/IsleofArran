@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>GIS and the Web</title>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+    </head>
+    <body>
+        <p>The direction is: <span id="compassReading"></span> degrees.</p>
+        <script>
+            L.DomEvent.on(window, 'deviceorientation', function() {
+                
+                let angle;
+
+                // iphone
+                if(e.webkitCompassHeading){	
+                    angle = 360 - e.webkitCompassHeading;
+                
+                // android
+                } else if(e.alpha) {			
+                    angle = e.alpha;
+
+                } else {
+                    this._errorCompass({message: 'Orientation angle not found'});
+                }
+                
+                document.getElementById.innerHTML(angle);
+            });
+        </script>
+    </body>
+</html>
