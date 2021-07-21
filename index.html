@@ -1,8 +1,9 @@
+
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Testing v0.1.0</title>     <!-- Title of webpage -->           
+		<title>Testing v0.1.0</title>              
 	
 		
 		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"/>   <!-- Leafet CSS --> 
@@ -16,8 +17,8 @@
 		<link rel="stylesheet" href="./Leaflet.Legend-master/src/leaflet.legend.css" /> <!-- Leaflet legend CSS -->
 		<script src='./Leaflet.Legend-master/src/leaflet.legend.js'></script> <!-- Leaflet legend js -->
 		
-		<link rel="stylesheet" href="./leaflet-compass-master/src/leaflet-compass.css"/> <!-- Leaflet legend CSS -->
-		<script src='./Leaflet.leaflet-compass-master/src/leaflet-compass.js'></script> <!-- Leaflet legend js -->
+		<link rel="stylesheet" href="./leaflet-ruler-master/src/leaflet-ruler.css"/> <!-- Leaflet legend CSS -->
+		<script src='./leaflet-ruler-master/src/leaflet-ruler.js'></script> <!-- Leaflet legend js -->
 		
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />  <!-- Change size to fit mobile browser --> 
 		
@@ -135,22 +136,33 @@
 			}
 			
 			//COMPASS 
-			L.DomEvent.on(window, 'deviceorientation', function() {
-			let angle;
-			if(e.webkitCompassHeading)	//iphone
-				angle = 360 - e.webkitCompassHeading;
-
-			else if(e.alpha)			//android
-				angle = e.alpha;
-			else {
-				this._errorCompass({message: 'Orientation angle not found'});
+			options = {
+				position: 'topright',         // Leaflet control position option
+				circleMarker: {               // Leaflet circle marker options for points used in this plugin
+					color: 'red',
+					radius: 2
+				},
+				lineStyle: {                  // Leaflet polyline options for lines used in this plugin
+				color: 'red',
+				dashArray: '1,6'
+				},
+				lengthUnit: {                 // You can use custom length units. Default unit is kilometers.
+					display: 'miles',              // This is the display value will be shown on the screen. Example: 'meters'
+					decimal: 2,                 // Distance result will be fixed to this value. 
+					factor: null,               // This value will be used to convert from kilometers. Example: 1000 (from kilometers to meters)  
+					label: 'Distance:'           
+				},
+				angleUnit: {
+					display: '&deg;',           // This is the display value will be shown on the screen. Example: 'Gradian'
+					decimal: 2,                 // Bearing result will be fixed to this value.
+					factor: null,                // This option is required to customize angle unit. Specify solid angle value for angle unit. Example: 400 (for gradian).
+					label: 'Bearing:'
+				}
 			}
-			console.log(angle);
-			alert(angle); 
-			});
-			console.log("success!");
 			
-			
+			L.control.ruler(options).addTo(map); 
+		
+		
 
 			///////FUNCTION FOR GEOLOCATION//////////
 			function onLocationFound(e) {                 // Create function for geolocation
@@ -217,7 +229,7 @@
 			
 			//CREATE FIRST SITE//	//GOATFELL    						
 			var site_one = turf.point([-1.747301,53.793542]);					 // Turf point 
-			let inner_geofence1 = turf.buffer(site_one, 0.5, {units: 'miles', steps: 32}); 	// Add inner buffer //Change steps to make buffer rounder 
+			let inner_geofence1 = turf.buffer(site_one, 0.05, {units: 'miles', steps: 32}); 	// Add inner buffer //Change steps to make buffer rounder 
 			let outer_geofence1 = turf.buffer(site_one, 0.1, {units: 'miles', steps: 32}); // Add outer buffer 
 			var g = L.marker([53.793542, -1.747301], {icon:goatfell}).addTo(map);     // Add custom icons as regular markers (didnt really need turf for this bit)
 			L.geoJSON(inner_geofence1).addTo(map); 									// Add inner buffer to map 
