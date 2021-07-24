@@ -172,9 +172,9 @@
 					if (turf.booleanWithin(geopoint, outerbufferList[i])) {						// if current location is within geofence
 						options = {units:'miles'}; 
 						var distance = turf.distance(geopoint,geositelist[i],options);
-						var bearing = turf.bearing(geopoint, geositelist[i]); 				
-						document.getElementById("distance").innerHTML = distance; 
-						document.getElementById("bearing").innerHTML = bearing; 
+						var r_distance = Math.round(distance*100)/100; 	
+						document.getElementById("distance").innerHTML = r_distance; 
+						
 						//loc.bindPopup(get("distance")).openPopup(); 	
 				}
 			}	
