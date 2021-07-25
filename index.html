@@ -189,7 +189,8 @@
 				
 				for ( let i = 0; i < innerbufferList.length; i++) {      // For each item in the array 
 					if (turf.booleanWithin(geopoint, innerbufferList[i])) {					// if current location is within geofence
-						popups[i].openPopup();     //Open relevant popup 
+						popups[i].openPopup();     //Open relevant popup  
+						
 						if ( geofence_tracker [i] == 0) {     // If current geofence tracker value is 0 
 							geofence_tracker[i] = 1; 		// Change tracker to 1 
 							points = 0;      //Add point to rewards  
@@ -230,7 +231,8 @@
 			var g_popupContent = ("<h1> Well done! You found Goatfell! </h1><b> Dominant rock type:</b> Granite</p><b> Periods: </b> Palaeogene (66-23.02 million years ago), Quaternary (2.5 million years ago)</p> </b> <p>Goatfell (Gaoda Bheinn) is the highest peak on Arran, standing at 874m at the summit. Goatfell started life as a volcano and was shaped into its current form by glaciers during the last ice age. </p> <img src= 'goatfell_hillshade_2.PNG'/><p class='figureborder' style='text-align: center'> This map shows the North Arran Mountains, encompassing Goatfell and its surroundings.</p> <p> The North Arran Mountains were formed by a granite pluton forcing its way through Northern Arran. Plutons form when magma rise through the crust into dome shaped intrusions which are then exposed over time by erosion.</p><img src='insert_diagram_here.JPG' /><p class='figureborder' style= 'text-align: center'> Diagram caption here. </p><p>Of course, today the mountains are no longer domed shaped, having been shaped by Quaternary glaciation. The angular peaks of Goatfell display great examples of erosional features. Two particularly visible on the map are aretes and corries.</p> <img src='Goatfell_Corries.PNG'/> <p class='figureborder' style='text-align: center'> An arete and several corries are labelled here, on the east side of the mountain range. </p> </p> Corries are circular depressions which form as accumulated snow in hollows turns to ice. As the ice moves downhill, the bottom of the hollow is eroded. This erosion is uneven and causes a lip to form. When two corries erode back to back, an arete, a narrow ridge is formed. </p>")   //Add content using HTML tags 
 			var g_popup = g.bindPopup(g_popupContent, { //Note to self- don't use double quotes with classes 
 				maxWidth: 320, 
-				maxHeight: 400// Makes sure popups accomadate photos 
+				maxHeight: 400,// Makes sure popups accomadate photos 
+				closeOnClick : true
 			});    
 			g.off('click'); 
 			
@@ -261,7 +263,7 @@
 			var cs_popupContent = ("<h1> Well done! You found Corrie Sandstone! </h1><b> Dominant rock type: </b> Old red sandstone, Carboniferous rocks </p> <b> Periods: </b> Devonian (419-358 million years ago), Carboniferous (358-298 million years ago) </p> <p>This section of coastline at Corrie (An Coire) represents millions of years of geological time on Arran. The layers of rock present here help provide an indication of the past conditions of the island.</p> <img src= 'CorrieSandstoneGeology.PNG'/> <p class='figureborder' style='text-align:center'> This geological map provides a snapshot of the variety of rocks in the area. </p> <p> The red sandstone here resembles sand dunes present on earth today and were formed when Arran consisted of its own desert. Dry conditions prevailed when Arran was located at a similar latitiude as the Sahara is now. Sand was deposited in a large desert and shaped by strong winds. The rocks are a distinctive red colour due to Iron Oxide. </p> <img src='sandstone_photo.jpg'/> <p class='figureborder' style='text-align:center'> Similar shapes to sand dunes can be observed in this image. </p><p> Conglomerates present were formed when eroded sediment from the nearby Caladonian mountains was washed into the area by flooding. The lava represents a Carboniferous lava flow. Overall the red sandstone and Carboniferous rocks represent very different geological time periods with harsh conditions in the former and more tropical conditions in the latter.</p>")   //Add content using HTML tags 
 			var cs_popup = cs.bindPopup(cs_popupContent, { 
 				maxWidth: 320, 				// Makes sure popups accomadate photos
-				maxHeight: 400
+				maxHeight: 400,
 			});
 			cs.off('click');
 			
