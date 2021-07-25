@@ -101,7 +101,7 @@
 			let geofence_tracker = [0,0,0,0,0,0];  // Create array with each geofence set to zero 
 			
 			
-			alert("Welcome to the Isle of Arran!\nThis game has been developed to allow you to learn about the island's geodiversity on the go.\nIn order to continue please enable location.\nFurther instructions on how to play are shown in the menu.\n Enjoy!");     //Alert shown when webpage is opened 
+			//alert("Welcome to the Isle of Arran!\nThis game has been developed to allow you to learn about the island's geodiversity on the go.\nIn order to continue please enable location.\nFurther instructions on how to play are shown in the menu.\n Enjoy!");     //Alert shown when webpage is opened 
 			
 			
 			
@@ -221,7 +221,7 @@
 			
 			//CREATE FIRST SITE//	//GOATFELL    						
 			var site_one = turf.point([-1.747301,53.793542]);					 // Turf point 
-			let inner_geofence1 = turf.buffer(site_one, 0.05, {units: 'miles', steps: 32}); 	// Add inner buffer //Change steps to make buffer rounder 
+			let inner_geofence1 = turf.buffer(site_one, 0.3, {units: 'miles', steps: 32}); 	// Add inner buffer //Change steps to make buffer rounder 
 			let outer_geofence1 = turf.buffer(site_one, 0.1, {units: 'miles', steps: 32}); // Add outer buffer 
 			var g = L.marker([53.793542, -1.747301], {icon:goatfell}).addTo(map);     // Add custom icons as regular markers (didnt really need turf for this bit)
 			L.geoJSON(inner_geofence1, {style:innerStyle}).addTo(map); 									// Add inner buffer to map 
