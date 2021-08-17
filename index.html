@@ -95,6 +95,13 @@
 			<b> Sedimentary rock type: </b> Comprised of eroded older rocks which are deposited into layers. </p> 
 			<b> Metamorphic rock type: </b> Rocks whose composition is altered by heat or pressure. </p> 
 			<b> Intrusion: </b> Features where igneous rocks intrude older rocks.</p> 
+			<h1 style="background-color:#97EFA4; text-shadow: 1px 1px white; padding-left: 5px;"> Further information</h1> 
+			<p> Want to learn more? Check out the links below </p>
+			<b>Arran Geopark: <a href="https://www.arrangeopark.co.uk/">Arran Geopark</a></b>
+			<br>
+			<b>Scottish Geology Trust: <a href="https://www.scottishgeologytrust.org/">Scottish Geology Trust</a></b>
+			<br> 
+			<b> British Geological Survey: <a href="https://mapapps.bgs.ac.uk/geologyofbritain/home.html">Geology of Britian viewer</a></b>
 		</div> 
 		
 	
@@ -140,7 +147,7 @@
 			tiles.addTo(map); // Add tiles to map 
 			
 			// ADD LOCATE 
-			map.locate({setView: false, maxZoom: 14, watch: true, enableHighAccuracy: true });			//Add geolocation watch = true means location is constantly watched rather than detected once    
+			map.locate({setView: false, maxZoom: 14, watch: true, enableHighAccuracy: true});			//Add geolocation watch = true means location is constantly watched rather than detected once    
 			
 			// ADD SIDEBAR WITH SETTINGS INFORMATION 
 			var sidebar_settings = L.control.sidebar('sidebar_settings', {
@@ -153,7 +160,6 @@
 			function Toggle () { 
 				sidebar_settings.toggle(); // Function to toggle sidebar 
 			}
-			
 			
 			///////FUNCTION FOR GEOLOCATION//////////
 			function onLocationFound(e) {                 // Create function for geolocation
